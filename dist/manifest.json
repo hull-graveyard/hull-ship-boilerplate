@@ -1,0 +1,14 @@
+{
+  "displayName": "Hull Ship Boilerplate",
+  "description": "A wonderful quiz for your users",
+  "index": "dist/index.html",
+  "ship": "dist/ship.html",
+  "version": "0.0.1",
+  "locales": ["en"],
+  "demoKeys": {
+    "appId": "YOUR_APP_ID",
+    "orgUrl": "YOUR_ORG_URL"
+  },
+  "settings": [],
+  "resources": []
+}
