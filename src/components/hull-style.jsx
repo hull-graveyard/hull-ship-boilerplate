@@ -27,13 +27,18 @@ var HullStyle = React.createClass({
         padding: 10px;
         margin:12px 0;
       }
+      #ship{
+        padding:24px;
+      }
       .svg-share-icon{
         width:64px;
+        margin:0 auto;
+        display:block;
       }
       .svg-icon-hull{
         width: 128px;
         margin:0 auto;
-        display:blockn
+        display:block;
       }
     `
     return style
