@@ -14,10 +14,10 @@ Quite simply, the web of tomorrow, today.
 
 - User-configurable styles for colors, background images, fonts, sizes, css transforms, opacity etc... Much better than [CSS Variables](http://caniuse.com/#feat=css-variables). Anything you can do in CSS can be exposed as a user-configurable setting 
 - No Style leakage between your app and the page. [Scoped Styles](http://caniuse.com/#feat=style-scoped) working today
-- [HTML Imports](http://caniuse.com/#feat=imports) : Have your app run securely in any environment. Build it as a full page app, we'll embed it in the right place without you worrying how it gets embedded and how it lives in the page
+- [HTML Imports](http://caniuse.com/#feat=imports) : Have your app run securely in any environment. Build it as a full page app, we'll embed it in the right place without you worrying how it gets delivered and how it lives in the page
 - Component-based development
 - Built-in I18n
-- ~~Based on [React-Router](https://github.com/rackt/react-router) for full access to every state of the App. Let the User preview every state of your application to check it's design and behaviour~~ (Soon)
+- Based on [React-Router](https://github.com/rackt/react-router) for full access to every state of the App. ~~Let the User preview every state of your application to check it's design and behaviour~~ (Soon)
 - ~~Flowers and unicorns~~ (Soon)
 
 ### Setup
@@ -62,9 +62,7 @@ Quite simply, the web of tomorrow, today.
 
 ### Front-end
 - React
-- ~~React-Router~~ _(Soon)_
-- Hull-Flux-Engine : Wraps api calls, Micro Flux-like architecture for simple apps
-- Hull-React-Frame to sandbox components inside the page, and style leakage prevention.
-- Hull-React-Style allowing to expose user-configurable styles, while you still write simple CSS
+- React-Router
+- ~~Hull-Flux-Engine : Wraps api calls, Micro Flux-like architecture for simple apps~~ _(Soon)_
+- Hull-Style react component allowing to expose user-configurable styles, while you still write simple CSS
 - Ship.js+Ship.html [HTML Imports](http://caniuse.com/#feat=imports) wrappers
-
