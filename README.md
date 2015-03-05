@@ -42,7 +42,7 @@ Quite simply, the web of tomorrow, today.
 ### Deployment
 - Publish anywhere you like, as long the following files are public:
 - `manifest.json`
-- `index.html`
+- `ship.html`
 - `ship.js`
  
 
