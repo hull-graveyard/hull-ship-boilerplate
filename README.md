@@ -12,7 +12,7 @@ A complete frontend environment based on the latest and greatest technology.
 
 Quite simply, the web of tomorrow, today.
 
-- User-configurable styles for colors, background images, fonts, sizes, css transforms, opacity etc... Much better than [CSS Variables](http://caniuse.com/#feat=css-variables). Anything you can do in CSS can be exposed as a user-configurable setting 
+- User-configurable styles for colors, background images, fonts, sizes, css transforms, opacity etc... Like [CSS Variables](http://caniuse.com/#feat=css-variables) but with more swag. Anything you can do in CSS can be exposed as a user-configurable setting 
 - No Style leakage between your app and the page. [Scoped Styles](http://caniuse.com/#feat=style-scoped) working today
 - [HTML Imports](http://caniuse.com/#feat=imports) : Have your app run securely in any environment. Build it as a full page app, we'll embed it in the right place without you worrying how it gets delivered and how it lives in the page
 - Component-based development
