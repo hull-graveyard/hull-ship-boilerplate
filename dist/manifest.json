@@ -7,6 +7,7 @@
   "demoKeys": {
     "appId": "YOUR_APP_ID",
     "orgUrl": "YOUR_ORG_URL"
+    "jsUrl" : "https://d3f5pyioow99x0.cloudfront.net/6f8ac94d95c42b46661ec3c10d1258e3e956e40c/hull.js",
   },
   "settings": [],
   "resources": []

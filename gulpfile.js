@@ -105,6 +105,7 @@ gulp.task('webpack:server', function(callback) {
   new WebpackDevServer(webpackDevCompiler, {
     contentBase: config.outputFolder,
     publicPath: '/'+config.assetsFolder+'/',
+    headers: { "Access-Control-Allow-Origin": "*" },
     hot: true,
     stats: {colors: true }
   }).listen(config.serverPort, function(err) {

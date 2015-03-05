@@ -20,7 +20,7 @@ var appInit = function(hull, me, platform, org){
   platform.deployments[0].ship.translations.en = Translations;
 
   // Fake the Homepage URL, and the manifest for the embedded ship
-  platform.deployments[0].ship.index = 'ship.html';
+  platform.deployments[0].ship.index = 'http://localhost:8081/ship.html';
 
   // When embedded by Hull. this is how the app will be booted:
   hull.embed(platform.deployments);
