@@ -1,55 +1,33 @@
-//This is what's needed to load the ship using the Index.html page.
-//We'll skip the deployment options, and pass the ship data directly to the
-//Ship.start() method
-
 // TEMPORARY
-import Hull from './lib/hull-init';
 import Translations from '../locales/en.json';
 import Manifest from '../manifest.json';
 // TEMPORARY
 
 import App from './app';
+Hull.init(hullConfig);
 
-Hull.init(hullConfig, function(hull, me, platform, org){
-  // Clone the Ship so we're safely using it
-  var platform = JSON.parse(JSON.stringify(platform));
-
-  // Since we're booting the ship fullpage,
-  // we're reworking the deployments object.
-  if(platform.type==='ship'){
-    var deployment={
-      ship:platform,
-      platform:{}
-    }
-  } else {
-    var deployment = platform.deployments[0];
-    delete platform.deployments;
-    // Change structure to pass the right format;
-    deployment.platform = platform;
-  }
+var appInit = function(hull, me, platform, org){
+  var ds = platform.deployments[0].deploy_options
+  platform.deployments[0].settings = {}
+  platform.deployments[0].settings.$selector = ds.el
+  platform.deployments[0].settings.$multi = true
+  platform.deployments[0].settings.$placement = ds.placement
+  platform.deployments[0].settings.$sandbox = true
+  platform.deployments[0].settings.$width = '100%'
+  platform.deployments[0].settings.$height = '400'
 
   // TEMPORARY
-  deployment.ship.translations.en = Translations;
+  platform.deployments[0].ship.translations.en = Translations;
 
   // Fake the Homepage URL, and the manifest for the embedded ship
-  // deployment.ship.index = deployment.ship.manifest.index
-  // deployment.ship.index = '/'+deployment.ship.manifest.index
-  deployment.ship.index = Manifest.index.replace(/dist\//,'');
-
-  // Fake deployment options to insert the ship in the test page.
-  deployment.settings = {
-    $el:'#ship',
-    $placement:'bottom',
-    $multi:true,
-    $fullpage: false
-  };
-  // For full apps, do this to embed the ship without going through HTML imports.
-  App.start(document.getElementById('ship'),deployment);
+  platform.deployments[0].ship.index = 'ship.html';
 
   // When embedded by Hull. this is how the app will be booted:
-  // 
-  // Only one ship testing at a time, but Hull.embed expects an array;
-  // Hull.embed([deployment]);
-  // This will call the `Hull.onEmbed()` that's inside the app
-});
+  hull.embed(platform.deployments);
+
+  // For full apps, skip the embed process, boot directly
+  // App.start(document.getElementById('ship'),platform.deployments[0]);
+}
+
+Hull.ready(appInit)
 

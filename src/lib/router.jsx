@@ -4,23 +4,20 @@ var {Route, Routes, NotFoundRoute, DefaultRoute, Redirect} = Router;
 
 import Ship   from '../components/ship';
 
-var routes=(
-  <Route path='/' handler={Ship}>
-  </Route>
-);
-
-var AppRouter;
-var isRunning = false;
-
 function onError(error) {
   console.error("---------------------- Router Error ---------------------- ",error, error.stack);
 }
 
+var AppRouter, isRunning = false, routes=(
+  <Route path='/' handler={Ship}>
+  </Route>
+);
+
 module.exports = {
   run: function(onRouteChange) {
     AppRouter = Router.create({
+      location: Router.HashLocation, //You need to use HashLocation, otherwise sandboxing mode will be broken.
       routes: routes,
-      location: Router.HashLocation,
       onError: onError
     });
     return AppRouter.run(function(Handler, state) {

@@ -9,7 +9,7 @@ import MainStyles from '../styles/main.scss';
  * @param  {hash} settings
  * @return {React Component} A style bundle containing a mix of Stylesheets, Inline styles. 
  */
-var Style = React.createClass({
+var HullStyle = React.createClass({
   componentDidMount() {
     //Embed your SCSS Files like this. Gives you reference-counted files, and immediate removal when the component isn't used anymore.
     MainStyles.use(this.getDOMNode());
@@ -23,7 +23,6 @@ var Style = React.createClass({
 
     // Just Javascript™
     var props = this.props
-    var background_image = props[`${key}_background_image`];
 
     // Here's where you inject your user-configurable CSS.
     // ES6 template literals (http://updates.html5rocks.com/2015/01/ES6-Template-Strings) make this a fun moment.
@@ -32,7 +31,7 @@ var Style = React.createClass({
         color: ${props.text_color};
         color: ${Color(props.text_color).clearer(.4).hslString()};
         background-color: ${props.background_color};
-        background-image: url(${background_image});
+        background-image: url(${props.background_image});
       }
     `
     return style
@@ -49,5 +48,5 @@ var Style = React.createClass({
 
 });
 
-module.exports = Style;
+module.exports = HullStyle;
 

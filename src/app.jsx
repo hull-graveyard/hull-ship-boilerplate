@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 // This is where our actual App begings.
 // It's used by:
 // - ship.js to boot from an Embedded HTML Import
