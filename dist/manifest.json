@@ -6,9 +6,8 @@
   "version": "0.0.1",
   "locales": ["en"],
   "demoKeys": {
-    "jsUrl": "https://js.hull.dev/assets",
-    "appId": "54e60986806eb9db67000287",
-    "orgUrl": "https://hulldemos.hullbeta.io"
+    "appId": "YOUR_APP_ID",
+    "orgUrl": "YOUR_ORG_URL"
   },
   "settings": [],
   "resources": []
