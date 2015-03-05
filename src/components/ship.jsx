@@ -4,6 +4,7 @@
 
 import React     from 'react';
 import HullStyle from './hull-style';
+import HullIcons     from './hull-icons';
 
 var Ship = React.createClass({
   propTypes: {
@@ -12,7 +13,9 @@ var Ship = React.createClass({
   render: function() {
     return <div>
       <HullStyle {...this.props.settings}/>
-      <h2>Ship Demo</h2>
+      <HullIcons.Hull {...this.props.settings}/>
+      <h1>Ship loaded properly</h1>
+      <hr/>
     </div>
   },
 
@@ -28,3 +31,5 @@ var Ship = React.createClass({
 });
 
 module.exports = Ship;
+
+

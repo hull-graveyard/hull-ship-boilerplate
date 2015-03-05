@@ -3,11 +3,20 @@ import App from './app';
 // This is the entry point for the Ship when it's used as an HTML Import.
 // It's standalone and boots when Hull exists and calls onEmbed
 
-// This is called when the ship has been embedded in the page.
-// If not embedded, then the code requiring this module will
-// be able to call Ship.start(...) to boot the app
+// Yes. You can do this with Webpack.
+import MainStyles from './styles/main.scss';
+
 if (Hull){
+
+  // This is called when the ship has been embedded in the page.
   Hull.onEmbed(document, App.start);
+
+  //Embed your SCSS Files like this.
+  //Gives you reference-counted files;
+  MainStyles.use(document.getElementsByTagName('head')[0]);
+
+  // To remove the style: 
+  // MainStyles.unuse();
 
   // Automatically resize the frame to match the Ship Content
   // Call the method once to know if we're in a sandbox or not

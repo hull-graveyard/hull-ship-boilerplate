@@ -8,6 +8,7 @@ Hull.init(hullConfig);
 
 var appInit = function(hull, me, platform, org){
   var ds = platform.deployments[0].deploy_options
+
   platform.deployments[0].settings = {}
   platform.deployments[0].settings.$selector = ds.el
   platform.deployments[0].settings.$multi = true
