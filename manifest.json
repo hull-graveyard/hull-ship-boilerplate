@@ -1,6 +1,6 @@
 {
-  "displayName": "Hull Ship Boilerplate",
-  "description": "A wonderful quiz for your users",
+  "name": "Hull Ship Boilerplate",
+  "description": "Hull Ship Boilerplate",
   "index": "ship.html",
   "version": "0.0.1",
   "locales": ["en"],
