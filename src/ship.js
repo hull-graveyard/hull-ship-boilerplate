@@ -6,17 +6,17 @@ import App from './app';
 // Yes. You can do this with Webpack.
 import MainStyles from './styles/main.scss';
 
+//// Now you can embed CSS like this.
+//// Gives you reference-counted files;
+// MainStyles.use(document.getElementsByTagName('head')[0]);
+
+//// To remove the style: 
+// MainStyles.unuse();
+
 if (Hull){
 
   // This is called when the ship has been embedded in the page.
   Hull.onEmbed(document, App.start);
-
-  //Embed your SCSS Files like this.
-  //Gives you reference-counted files;
-  MainStyles.use(document.getElementsByTagName('head')[0]);
-
-  // To remove the style: 
-  // MainStyles.unuse();
 
   // Automatically resize the frame to match the Ship Content
   // Call the method once to know if we're in a sandbox or not

@@ -19,9 +19,10 @@ var WebpackDevServer = require("webpack-dev-server");
 var config = require("./config");
 var webpackConfig = require("./webpack.config");
 
+
+// Task Bundles
 gulp.task("default", ["server"]);
 gulp.task("serve",   ["server"]);
-gulp.task("clean",   function(cb)       {del(["./"+config.outputFolder+"/**/*"], cb); });
 
 gulp.task("server",  function(callback) {runSequence("clean", "copy-files:watch", "webpack:server", callback); });
 gulp.task("build",   function(callback) {runSequence("clean", "copy-files", "webpack:build", callback); });
@@ -30,6 +31,23 @@ gulp.task("deploy",  function(callback) {runSequence("build", "gh:deploy", callb
 
 var notify = function(message){
   notifier.notify({title: config.displayName+" Gulp",message:message});
+};
+
+// Raise errors on Webpack build errors
+var webpackFeedbackHandler = function(err, stats){
+  handleError(err);
+
+  var jsonStats = stats.toJson();
+
+  if(jsonStats.errors.length > 0){
+    gutil.log("[webpack:build:error]", JSON.stringify(jsonStats.errors));
+    throw new gutil.PluginError("webpack:build:error", JSON.stringify(jsonStats.errors));
+  }
+
+  // Don't throw an error here : Uglify uses a lot of warnings to mention stripped code
+  if(jsonStats.warnings.length > 0){
+    gutil.log("[webpack:build:warning]", JSON.stringify(jsonStats.warnings,null,2));
+  }
 };
 
 // Copy static files from the source to the destination
@@ -42,21 +60,8 @@ var copyFiles = function(callback){
     callback();
   }
 };
-// Raise errors on Webpack build errors
-var webpackFeedbackHandler = function(err, stats){
-  handleError(err);
 
-  var jsonStats = stats.toJson();
-
-  if(jsonStats.errors.length > 0){
-    gutil.log("[webpack:build:error]", JSON.stringify(jsonStats.errors));
-    throw new gutil.PluginError("webpack:build:error", JSON.stringify(jsonStats.errors));
-  }
-
-  if(jsonStats.warnings.length > 0){
-    gutil.log("[webpack:build:warning]", JSON.stringify(jsonStats.warnings,null,2));
-  }
-};
+// Handle Gulp Errors
 var handleError = function(err, taskName){
   if(err){
     notify(taskName+" Error: "+ err);
@@ -64,8 +69,19 @@ var handleError = function(err, taskName){
   }
 };
 
+
+/**
+ * GULP TASKS START HERE
+*/
+
+
+// Cleanup build folder
+gulp.task("clean",   function(cb)       {del(["./"+config.outputFolder+"/**/*"], cb); });
+
+// One-time file copy
 gulp.task("copy-files", copyFiles);
 
+// Watch files for changes and copy them
 gulp.task("copy-files:watch", function(){
   copyFiles();
   gulp.watch(_.keys(config.files),copyFiles);
@@ -109,7 +125,7 @@ gulp.task("webpack:server", function() {
   var taskName = "webpack:server";
   new WebpackDevServer(webpackDevCompiler, {
     contentBase: config.outputFolder,
-    publicPath: "/"+config.assetsFolder+"/",
+    publicPath: "/"+config.assetsFolder,
     headers: { "Access-Control-Allow-Origin": "*" },
     hot: config.hotReload,
     stats: {colors: true }

@@ -12,7 +12,7 @@ var moment = require("moment");
 // WIHTOUT UPDATING PACKAGE.JSON TOO.
 var sourceFolder = "src";
 var outputFolder = "dist";
-var assetsFolder = "assets";
+var assetsFolder = "";
 var serverPort   = process.env.PORT||8081;
 var previewUrl   = "http://localhost:"+serverPort;
 
@@ -59,7 +59,7 @@ var output = {
   chunkFileName: "[name].chunk.js",
   libraryTarget: "umd",
   library: displayName,
-  publicPath: "/"+assetsFolder+"/"
+  publicPath: assetsFolder+"/"
 };
 
 var extensions         = ["", ".js", ".jsx", ".css", ".scss"];
