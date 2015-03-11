@@ -1,8 +1,9 @@
 {
   "name": "Hull Ship Boilerplate",
   "description": "Hull Ship Boilerplate",
+  "picture": "picture.png",
   "index": "ship.html",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "locales": ["en"],
   "settings": [],
   "resources": []
