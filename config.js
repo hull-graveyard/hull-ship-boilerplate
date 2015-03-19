@@ -5,7 +5,6 @@ var webpack = require("webpack");
 var path = require("path");
 var pkg = require("./package.json");
 var manifest = require("./manifest.json");
-var hullConfig = require("./hull-config.json");
 var moment = require("moment");
 
 // DO NOT CHANGE FOLDERS
@@ -64,9 +63,9 @@ var output = {
 
 var extensions         = ["", ".js", ".jsx", ".css", ".scss"];
 
-var modulesDirectories = ["node_modules", "bower_components", "src/vendor"];
+var modulesDirectories = ["node_modules", "bower_components", "bower_components/foundation/scss/", "src/vendor"];
 
-var sassIncludePaths   = modulesDirectories.map(function(include){
+var cssIncludes   = modulesDirectories.map(function(include){
   return ("includePaths[]="+path.resolve(__dirname, include));
 }).join("&");
 
@@ -79,8 +78,8 @@ var sassIncludePaths   = modulesDirectories.map(function(include){
 var loaders = [
   {test: /\.json$/,                loaders: ["json-loader"] },
   {test: /\.js$/,                  loaders: ["babel-loader"], exclude: /node_modules|bower_components/},
-  {test: /\.jsx$/,                 loaders: ["react-hot", "babel-loader"]},
-  {test: /\.(css|scss)$/,          loaders: ["style/useable", "css-loader", "autoprefixer-loader?browsers=last 2 version", "sass-loader?outputStyle=expanded&"+sassIncludePaths]},
+  {test: /\.jsx$/,                 loaders: ["react-hot", "babel-loader"], exclude: /node_modules/},
+  {test: /\.(css|scss)$/,          loaders: ["style/useable", "css-loader", "autoprefixer-loader?browsers=last 2 version", "sass-loader?outputStyle=expanded&"+cssIncludes]},
   {test: /\.jpe?g$|\.gif$|\.png$/, loaders: ["file"]},
   {test: /\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
 ];
@@ -91,8 +90,7 @@ var loaders = [
 var plugins = [
   new webpack.DefinePlugin({
     "BUILD_DATE" : JSON.stringify(moment().format("MMMM, DD, YYYY, HH:mm:ss")),
-    "PUBLIC_PATH": JSON.stringify(output.publicPath),
-    "hullConfig" : JSON.stringify(hullConfig)
+    "PUBLIC_PATH": JSON.stringify(output.publicPath)
   }),
   new webpack.ResolverPlugin(
     new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
@@ -107,7 +105,6 @@ module.exports = {
   libName            : libName,
   displayName        : displayName,
 
-  hullConfig         : hullConfig,
   files              : files,
 
   outputFolder       : outputFolder,

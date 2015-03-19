@@ -2,14 +2,16 @@
 /*global require, console*/
 
 var _ = require("underscore");
+var path = require('path');
 var del = require("del");
-var openBrowser = require("open");
 var runSequence = require("run-sequence");
 
 var gulp = require("gulp");
 var gutil = require("gulp-util");
-var deploy = require("gulp-gh-pages");
+var ghpages = require("gh-pages");
 var notifier = require("node-notifier");
+
+var ngrok = require('ngrok');
 
 var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
@@ -69,6 +71,25 @@ var handleError = function(err, taskName){
   }
 };
 
+// Setup a Ngrok server
+var ngrokServe = function(subdomain){
+  var options = { port: config.serverPort };
+  var env = process.env;
+  if (env.NGROK_AUTHTOKEN) {
+    options.authtoken = env.NGROK_AUTHTOKEN;
+  }
+  if(env.NGROK_SUBDOMAIN || subdomain){
+    options.subdomain = env.NGROK_SUBDOMAIN || subdomain;
+  }
+  ngrok.connect(options, function (error, url) {
+    if (error) throw new gutil.PluginError('ship:server', error);
+
+    url = url.replace('https', 'http');
+    notify({message:"Ngrok Started on "+url});
+
+    gutil.log('[ship:server]', url);
+  });
+}
 
 /**
  * GULP TASKS START HERE
@@ -123,7 +144,7 @@ gulp.task("webpack:build:dev", function(callback) {
 // Launch webpack dev server.
 gulp.task("webpack:server", function() {
   var taskName = "webpack:server";
-  new WebpackDevServer(webpackDevCompiler, {
+  var server = new WebpackDevServer(webpackDevCompiler, {
     contentBase: config.outputFolder,
     publicPath: "/"+config.assetsFolder,
     headers: { "Access-Control-Allow-Origin": "*" },
@@ -135,16 +156,14 @@ gulp.task("webpack:server", function() {
     var url = webpackConfig.development.browser.output.publicPath+"webpack-dev-server/";
     gutil.log("["+taskName+"] started at ", url);
     notify({message:"Dev Server Started"});
-    openBrowser(url,"chrome");
+    ngrokServe(config.libName)
   });
 });
 
+
 // Deploy production bundle to gh-pages.
-gulp.task("gh:deploy", function () {
-  var outputBundle = "./"+config.outputFolder+"/**/*";
-  console.log("deploying to "+outputBundle);
-  var stream = gulp.src(outputBundle).pipe(deploy({}));
-  notify("Deploying to Github Pages");
-  return stream;
+gulp.task("gh:deploy", function (callback) {
+  notify("Deploying "+config.outputFolder+" to Github Pages");
+  ghpages.publish(path.join(process.cwd(), config.outputFolder), callback);
 });
 

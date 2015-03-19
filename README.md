@@ -20,36 +20,56 @@ Quite simply, the web of tomorrow, today.
 - Based on [React-Router](https://github.com/rackt/react-router) for full access to every state of the App. ~~Let the User preview every state of your application to check it's design and behaviour~~ (Soon)
 - ~~Flowers and unicorns~~ (Soon)
 
+
+### Building Ships
+
+You can use the tooling of your choice to build Ships, they're technology-agnostic. However, after spending months building them, we've settled on a stack that's a combination of sheer power and ease of use. We recommend it strongly.
+
+---
+
 ### Setup
 
-- Ensure that [Node.js](http://nodejs.org) and [gulp](http://gulpjs.com) are installed. Gulp can easily be installed with `npm install -g gulp`
-- Run `npm install`
-- Go to the [Hull Dashboard](https://dashboard.hullbeta.io/) > Ships > Add Ship, and paste the ship boilerplate manifest URL : https://raw.githubusercontent.com/hull-ships/hull-ship-boilerplate/master/manifest.json
-- Copy the Ship's ID, paste it in your local `manifest.json` under `demoKeys.appId`. Paste your Org URL under `demoKeys.orgUrl`
+```sh
+npm install -g gulp
+npm install
+gulp server
+```
+
+### Configuration
+
+- Go to the Hull Dashboard, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-ship-boilerplate`.
+- Copy the snippet, paste in `index.html`
+- In the Platform customization screen, click `Add Ship > New Ship > Hull Ship Boilerplate`
+- Go to the `Advanced` tab, and input the URLs to your ship so that Hull can access the `manifest.json`. Save
 
 ### Developing
 
 - Run `gulp server` and visit [http://localhost:8081/](http://localhost:8081/).
+- We setup a ngrok tunnel with the subdomain matching `name` in `package.json`. Ensure it's not used, For now we don't do error checking.
 - Write Code
 - Drink Coffee
 - Be nice to others
 - Repeat
 - Publish
 
-### Build
-- run `gulp build`
+### Building
 
-### Deployment
-- Publish anywhere you like, as long the following files are public:
-- `manifest.json`
-- `ship.html`
-- `ship.js`
+```sh
+gulp build
+```
+
+### Deployment on Github Pages
+
+```sh
+gulp deploy
+```
  
-
+---
 
 ## Inside the box : 
 
 ### Tooling
+
 - Gulp
 - Webpack
 - Webpack-dev-server
@@ -61,8 +81,9 @@ Quite simply, the web of tomorrow, today.
 - Native OSX Notifications, because you want to know when things happen.
 
 ### Front-end
+
 - React
 - React-Router
 - ~~Hull-Flux-Engine : Wraps api calls, Micro Flux-like architecture for simple apps~~ _(Soon)_
 - Hull-Style react component allowing to expose user-configurable styles, while you still write simple CSS
-- Ship.js+Ship.html [HTML Imports](http://caniuse.com/#feat=imports) wrappers
+- ship.js+ship.html [HTML Imports](http://caniuse.com/#feat=imports) wrappers
