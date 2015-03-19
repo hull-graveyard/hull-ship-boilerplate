@@ -1,12 +1,27 @@
 import React      from 'react';
 import Color      from 'color';
 
+// Yes. You can do this with Webpack.
+import MainStyles from '../styles/main.scss';
+
+//// Now you can embed CSS like this.
+//// Gives you reference-counted files;
+
+//// To remove the style: 
+// MainStyles.unuse();
+
 /**
  * Style component
  * @param  {hash} settings
  * @return {React Component} A style tag
  */
 var HullStyle = React.createClass({
+  componentDidMount: function() {
+    MainStyles.use();
+  },
+  componentWillUnmount: function() {
+    MainStyles.unuse();
+  },
   getStyle: function(){
 
     // Just Javascript™
@@ -21,14 +36,19 @@ var HullStyle = React.createClass({
         background-image: url(${props.background_image});
       }
       hr{
-        height: 4px;
+        height: 10px;
         border:0;
         background-image: linear-gradient(to right, ${left_color} 0%,  ${right_color} 100%);
-        padding: 10px;
-        margin:12px 0;
+        padding: 0 0 0 0;
+        margin:16px 0;
       }
       #ship{
-        padding:24px;
+        width: 80%;
+        margin:50px auto;
+        padding-bottom: 10px;
+        min-width: 300px;
+        box-shadow: 0 0 10px rgba(0,0,0,.05);
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.05);
       }
       .svg-share-icon{
         width:64px;
@@ -36,8 +56,9 @@ var HullStyle = React.createClass({
         display:block;
       }
       .svg-icon-hull{
+        opacity: .1;
         width: 128px;
-        margin:0 auto;
+        margin:30px auto 0;
         display:block;
       }
     `

@@ -4,7 +4,7 @@
 
 import React     from 'react';
 import HullStyle from './hull-style';
-import HullIcons     from './hull-icons';
+import Icons     from './hull-icons';
 
 var Ship = React.createClass({
   propTypes: {
@@ -13,9 +13,13 @@ var Ship = React.createClass({
   render: function() {
     return <div>
       <HullStyle {...this.props.settings}/>
-      <HullIcons.Hull {...this.props.settings}/>
-      <h1>Ship loaded properly</h1>
       <hr/>
+      <p>
+        <Icons.Hull {...this.props.settings}/>
+      </p>
+      <p><a href='https://github.com/hull-ships/hull-ship-boilerplate/archive/master.zip' className='download-link'>
+        <Icons.Download {...this.props.settings} style={{marginBottom:5}}/> Download Boilerplate
+      </a></p>
     </div>
   },
 
