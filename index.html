@@ -1,26 +1,17 @@
 <html>
 <head>
   <title>Ship Boilerplate</title>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/normalize.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/foundation/5.4.5/css/foundation.min.css">
-  <script
-    id='hull-js-sdk'
-    src="//hull-js.s3.amazonaws.com/82df323b1c482f76d3139c771cc76c5430770c4a/hull.debug.js"
-    platform-id='54a3f0802df1f316aa000003'
-    org-url='ships-demos.hullbeta.io'
-    debug='true'
-    ></script>
-  <!--
-    This page will start the ship directly, skipping html embeds.
-    It will use the keys from manifest.json.
-    That's usually what you need to display a demo and develop locally.
-  -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script id="hull-js-sdk" platform-id="550aa67c96f452f4c4000bea" org-url="http://hull-demos.hullapp.io" src="https://hull-js.s3.amazonaws.com/4693eff35aadb2510ab14bd5c38793b26c12dec9/hull.js"></script>
   <style>
     body{
+      color: #3f4547;
+      font-family: "Helvetica Neue", arial, sans-serif;
+      font-size: 15px;
       -webkit-font-smoothing: antialiased;
-      text-align: center;
       background-color: white;
-      padding: 24px;
     }
     h1{
       font-weight: 200;
@@ -30,7 +21,6 @@
   </style>
 </head>
 <body>
-  <h1>Host Page</h1>
   <div class="main" id='ship'></div>
   <script src="index.js"></script>
 </body>
