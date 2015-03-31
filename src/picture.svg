@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="640px" height="360px" viewBox="0 0 640 360" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>boilerplate</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="52.8031111%" y1="100%" x2="52.8031116%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#EDE7E8" offset="0%"></stop>
+            <stop stop-color="#F4F4F4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Ships" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="boilerplate" sketch:type="MSLayerGroup">
+            <rect id="Rectangle-105" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup" x="0" y="0" width="640" height="360"></rect>
+            <g id="traffic-light" transform="translate(258.000000, 92.000000)" sketch:type="MSShapeGroup">
+                <g id="Body_14_" fill="#666666">
+                    <path d="M90.9090909,0 L34.0909091,0 C27.8153409,0 22.7272727,5.09315625 22.7272727,11.375 L22.7272727,170.625 C22.7272727,176.906844 27.8153409,182 34.0909091,182 L90.9090909,182 C97.1846591,182 102.272727,176.906844 102.272727,170.625 L102.272727,11.375 C102.272727,5.09315625 97.1846591,0 90.9090909,0 L90.9090909,0 Z" id="Shape"></path>
+                </g>
+                <g id="Tunnel_Visor" fill="#333333">
+                    <path d="M0,22.75 C8.34659091,22.75 17.0454545,51.1875 17.0454545,51.1875 L22.7272727,51.1875 L22.7272727,17.0625 L0,17.0625 L0,22.75 L0,22.75 Z M0,73.9375 C8.34659091,73.9375 17.0454545,102.375 17.0454545,102.375 L22.7272727,102.375 L22.7272727,68.25 L0,68.25 L0,73.9375 L0,73.9375 Z M0,125.125 C8.34659091,125.125 17.0454545,153.5625 17.0454545,153.5625 L22.7272727,153.5625 L22.7272727,119.4375 L0,119.4375 L0,125.125 L0,125.125 Z M102.272727,17.0625 L102.272727,51.1875 L107.954545,51.1875 C107.954545,51.1875 116.65625,22.75 125,22.75 L125,17.0625 L102.272727,17.0625 L102.272727,17.0625 Z M102.272727,102.375 L107.954545,102.375 C107.954545,102.375 116.65625,73.9375 125,73.9375 L125,68.25 L102.272727,68.25 L102.272727,102.375 L102.272727,102.375 Z M102.272727,153.5625 L107.954545,153.5625 C107.954545,153.5625 116.65625,125.125 125,125.125 L125,119.4375 L102.272727,119.4375 L102.272727,153.5625 L102.272727,153.5625 Z" id="Shape"></path>
+                </g>
+                <g id="Green_6_" fill="#88C057">
+                    <ellipse id="Oval" cx="62.5" cy="142.136313" rx="17.0454545" ry="17.0795625"></ellipse>
+                </g>
+                <g id="Yellow_8_" fill="#FFCC66">
+                    <ellipse id="Oval" cx="62.5" cy="90.9488125" rx="17.0454545" ry="17.0795625"></ellipse>
+                </g>
+                <g id="Red_27_" fill="#ED7161">
+                    <ellipse id="Oval" cx="62.5" cy="39.7613125" rx="17.0454545" ry="17.0795625"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
