@@ -17,10 +17,19 @@ import ShipRouter from './lib/router';
 // Dont start the app from here
 // Call App.start(...) from your script to boot
 var App = {
-  start: function(element, deployment){
+  start: function(element, deployment, hull){
 
     // Create the Ship Engine
-    var engine = new Engine(deployment);
+    var engine = new Engine(deployment, hull);
+
+    // Automatically resize the frame to match the Ship Content
+    // Call the method once to know if we're in a sandbox or not.
+    // Returns true if we are
+    if(hull.autoSize()){
+      setInterval(function(){
+        hull.autoSize();
+      }, 200);
+    }
 
     // Start the router
     ShipRouter.run(function (Handler, state) {

@@ -24,14 +24,15 @@ var Constants = {
 
 var CHANGE_EVENT='change'
 
-function Engine(deployment) {
+function Engine(deployment, hull) {
+  var hull = hull;
   var self=this;
   var onChange = function() {
     self.emitChange();
   }
 
   // Subscribe to every Hull user event
-  Hull.on('hull.user.*', onChange);
+  hull.on('hull.user.*', onChange);
   this.emitChange();
 }
 
