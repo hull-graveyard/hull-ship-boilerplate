@@ -19,22 +19,24 @@ import ShipRouter from './lib/router';
 var App = {
   start: function(element, deployment, hull){
 
+    var e=element.querySelector('#ship') || element
+
     // Create the Ship Engine
     var engine = new Engine(deployment, hull);
 
     // Automatically resize the frame to match the Ship Content
     // Call the method once to know if we're in a sandbox or not.
     // Returns true if we are
-    if(hull.autoSize()){
-      setInterval(function(){
-        hull.autoSize();
-      }, 200);
-    }
+    // if(hull.autoSize()){
+    //   setInterval(function(){
+    //     hull.autoSize();
+    //   }, 200);
+    // }
 
     // Start the router
     ShipRouter.run(function (Handler, state) {
       // On location change, Update the Engine state.
-      React.render(<Handler engine={engine}/>, element);
+      React.render(<Handler engine={engine}/>, e);
     });
   }
 }

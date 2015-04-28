@@ -2,22 +2,31 @@ import React  from 'react';
 import Router from 'react-router';
 var {Route, Routes, NotFoundRoute, DefaultRoute, Redirect} = Router;
 
-import Ship   from '../components/ship';
+import Ship    from '../components/ship';
+import Second  from '../components/second';
+
+var App = React.createClass({
+  render: function() {
+    return (<Router.RouteHandler />);
+  }
+});
 
 function onError(error) {
   console.error("---------------------- Router Error ---------------------- ",error, error.stack);
 }
 
 var AppRouter, isRunning = false, routes=(
-  <Route path='/' handler={Ship}>
+  <Route path='/' name='home' handler={App}>
+    <DefaultRoute handler={Ship}/>
+    <Route name='second' path='/second' handler={Second}/>
   </Route>
 );
 
 module.exports = {
   run: function(onRouteChange) {
     AppRouter = Router.create({
-      location: Router.HashLocation, //You need to use HashLocation, otherwise sandboxing mode will be broken.
       routes: routes,
+      location: Router.HistoryLocation,
       onError: onError
     });
     return AppRouter.run(function(Handler, state) {

@@ -32,6 +32,7 @@ function gulpDest(out){
 }
 
 var files = {
+  "src/styles/*.css"  : gulpDest("styles/"),
   "src/vendors/**/*" : gulpDest("vendors/"),
   "src/images/**/*"  : gulpDest("images/"),
   "manifest.json"    : outputFolder,
@@ -42,6 +43,7 @@ var files = {
 
 var libName = pkg.name;
 var displayName = manifest.name||libName;
+
 
 
 // ------------------------------------------------

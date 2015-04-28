@@ -1,67 +1,71 @@
-/*Styles go here*/
-/*@import works.*/
+$base: #ff0000;
 
+// Body Styles don't leak into the page !
 body{
-  color: #2A2E34;
-  // color: #EAEEF3;
+  color: #FF6600;
+  text-align: center;
 }
 
-a, a:active, a:hover, a:focus{
-  color: #0093e6;
-  text-decoration: none;
+// Special style that targets the sandbox itself
+:host {
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  border:1px solid #ccc;
 }
 
-.no-margin{
-  margin:0;
+h1 { color: yellow; /* Yellow*/  }
+h1 { color: #4BC2B8; /* Green */ }
+
+hr{
+  height: 10px;
+  background-color: #4BC2B8;
+  padding: 0 0 0 0;
+  margin:0 0 16px 0;
 }
 
+#ship{
+  width: 80%;
+  margin:50px auto;
+  padding-bottom: 10px;
+  min-width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,.05);
+}
 
-.download-link{
-  .svg-share-icon-download{
-    transform: scale(.9);
+.svg-icon-hull{
+  opacity: .1;
+  margin:30px auto 0;
+  display:block;
+
+  .svg-hull-upper, .svg-hull-lower{
+    transform-origin: 50%;
+    transition: all .2s ease-out;
+    animation: rainbow;
   }
-  .svg-share-icon-download,
-  #download-icon-arrow,
-  #download-icon-ground{
+}
+
+.svg-share-icon-download{
+  width:64px;
+  margin:0 auto;
+  display:block;
+  transform: scale(.9);
+  &, .svg-share-icon-arrow, .svg-share-icon-ground{
     transform-origin: 50%;
     transition: all .2s ease-out;
   }
-  #download-icon-arrow{
-    transform: translate3d(0,-20%,0) scale(.9);
-  }
-  #download-icon-ground{
-    transform: translate3d(0,20%,0) scale(.9);
-  }
   &:hover{
-    .svg-share-icon-download,
-    #download-icon-arrow,
-    #download-icon-ground{
+    .svg-share-icon-arrow, .svg-share-icon-ground{
       transform: translate3d(0,0,0) scale(1); 
     }
   }
 }
 
+.svg-share-icon-arrow  { transform: translate3d(0,-20%,0) scale(.9); }
+.svg-share-icon-ground { transform: translate3d(0,20%,0) scale(.9); }
 
-$base: #ff0000;
 @keyframes rainbow {
   @for $i from 0 through 10 {
     #{$i* 10%}  {
       fill: adjust-hue($base, $i *36deg);
     }
-  }
-}
-
-.svg-icon-hull{
-  .svg-hull-upper,
-  .svg-hull-lower{
-    transform-origin: 50%;
-    transition: all .2s ease-out;
-  }
-
-  .svg-hull-upper{
-    animation: rainbow;
-  }
-  .svg-hull-lower{
-    animation: rainbow;
   }
 }

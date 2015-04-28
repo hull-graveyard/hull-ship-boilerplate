@@ -1,5 +1,3 @@
-import App from './app';
-
 var appInit = function(hull, me, platform, org){
   // When developing on localhost, skip the embed process and start the ship directly
   // App.start(document.getElementById('ship'),platform.deployments[0]);

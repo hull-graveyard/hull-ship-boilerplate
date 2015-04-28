@@ -1,0 +1,8 @@
+.test-message:after {
+    content: 'Link Stylesheet loaded out of order';
+    color: #F60;
+}
+.test-message:after {
+    content: 'Link Stylesheet loaded in order';
+    color: #ccc;
+}

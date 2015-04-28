@@ -5,7 +5,7 @@ import App from './app';
 
 if (window.Hull){
   // This is called when the ship has been embedded in the page.
-  Hull.onEmbed(document, App.start);
+  Hull.onEmbed(App.start);
 }
 
 module.exports=App
