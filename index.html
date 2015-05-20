@@ -6,37 +6,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <script
     id="hull-js-sdk"
-    platform-id="550aa67c96f452f4c4000bea"
-    org-url="http://hull-demos.hullapp.io"
-    src="https://hull-js.s3.amazonaws.com/baee51ab766046903f5d0695852b7376c89cacf7/hull.debug.js"></script>
-  <!--
-    This page will start the ship directly, skipping html embeds.
-    It will use the keys from manifest.json.
-    That's usually what you need to display a demo and develop locally.
-  -->
+    platform-id="54e4bd605431d0593f000003"
+    debug="false"
+    org-url="https://hulldemos.hullbeta.io"
+    src="https://hull-js.s3.amazonaws.com/86cd411073db49da3abb82d405c9dde2694c6c2f/hull.js"></script>
   <style>
+    /*Host Styles*/
     body{
-      -webkit-font-smoothing: antialiased;
+      /*-webkit-font-smoothing: antialiased;*/
       background-color: white;
-      color: #3f4547;
+      color: #444;
       font-family: "Helvetica Neue", arial, sans-serif;
       font-size: 15px;
       padding: 24px;
       text-align: center;
     }
-    h1, h2, h3, h4, h5, h6{
-      color:#303030;
+    hr{
+      height: 2px;
+      background-color: #E75F45;
+      border:0;
+    }
+    p{
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
     h1{
       font-weight: 200;
       margin-bottom: 24px;
     }
+    .container{
+      max-width: 970px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
-  <h1>Hull Ship Boilerplate</h1>
-  <div class="main" id='ship'></div>
-  <a href="https://github.com/hull-ships/hull-ship-boilerplate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-  <script src="index.js"></script>
-</body>
+  <div class="container">
+    <h1>Hull Ship Boilerplate</h1>
+    <hr>
+    <p>Everything below is isolated</p>
+    <div style='display:table;width:100%;'>
+      <div style='display:table-cell;width:50%;'>
+        <h4>Scoped (In page + scoped CSS)</h4>
+        <div class="main well ship two">Loading</div>
+      </div>
+      <div style='display:table-cell;width:50%;'>
+        <h4>Sandboxed (Virtual Iframe)</h4>
+        <div class="main well ship one">Loading</div>
+      </div>
+    </div>
+    <br>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Unstyled Button
+    </button>
+  </div>
+<!--   <a href="https://github.com/hull-ships/hull-ship-boilerplate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+ --></body>
 </html>
