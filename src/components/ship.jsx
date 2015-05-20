@@ -11,19 +11,27 @@ var Ship = React.createClass({
   propTypes: {
     sandbox: React.PropTypes.bool,
   },
+  getDefaultProps: function() {
+    return {
+      engine : {},
+      settings : {}
+    };
+  },
   render: function() {
-    return <div className='container-fluid'>
-      <HullStyle {...this.props.settings}/>
+    return <div>
+      <HullStyle {...this.props.settings} document={this.props.engine.document}/>
       <hr/>
-      <h2>Hull Sandboxed Ship</h2>
-      <p className="test-message"></p>
+      <h1>Hull Ship Boilerplate</h1>
+      <span className='s2'>2</span> <span className='s3'>3</span> <span className='s4'>4</span> <span className='s5'>5</span>
       <div className="row">
         <div className="col-sm-4 col-sm-offset-4">
-          <div className="well">
+          <div className="well" style={{marginTop:12}}>
             <span className="glyphicon glyphicon-piggy-bank"></span>
           </div>
+          <div className="visible-xs-block">Iframe mode: Media queries apply</div>
         </div>
       </div>
+
       <p>
         <Icons.Hull {...this.props.settings}/>
       </p>
@@ -36,19 +44,7 @@ var Ship = React.createClass({
         <Link to='second' className='download-link'>See second page</Link>
       </p>
     </div>
-  },
-
-  statics:{
-    // Expose a static entry point to boot the ship
-    // You can call it with Ship.start(element,deployment)
-    start : function(element, deployment){
-
-      // A bit meta :p
-      React.render(<Ship/>, element);
-    }
   }
 });
 
 module.exports = Ship;
-
-

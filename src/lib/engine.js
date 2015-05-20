@@ -25,8 +25,9 @@ var Constants = {
 var CHANGE_EVENT='change'
 
 function Engine(deployment, hull) {
-  var hull = hull;
   var self=this;
+  self.document = hull.getDocument();
+
   var onChange = function() {
     self.emitChange();
   }
@@ -39,7 +40,7 @@ function Engine(deployment, hull) {
 assign(Engine.prototype, Emitter.prototype, {
   addChangeListener: function(listener) {this.addListener(CHANGE_EVENT, listener);},
   removeChangeListener: function(listener) {this.removeListener(CHANGE_EVENT, listener);},
-  emitChange: function(message) {this.emit(CHANGE_EVENT, message);}
+  emitChange: function(message) {this.emit(CHANGE_EVENT, message);},
 });
 
 Engine.Constants = Constants;

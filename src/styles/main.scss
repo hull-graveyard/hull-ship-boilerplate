@@ -2,19 +2,22 @@ $base: #ff0000;
 
 // Body Styles don't leak into the page !
 body{
-  color: #FF6600;
   text-align: center;
-}
-
-// Special style that targets the sandbox itself
-:host {
-  padding-bottom: 10px;
-  box-sizing: border-box;
-  border:1px solid #ccc;
 }
 
 h1 { color: yellow; /* Yellow*/  }
 h1 { color: #4BC2B8; /* Green */ }
+
+.s2,.s3{
+  color: #44B0B0;
+}
+.s2:after, .s3:after { 
+  color: #44B0B0;
+  content:' = 3 main.scss, wrong order';
+}
+.s2:after, .s3:after { 
+  content:' = 3 main.scss';
+}
 
 hr{
   height: 10px;
@@ -24,11 +27,11 @@ hr{
 }
 
 #ship{
-  width: 80%;
-  margin:50px auto;
+  width: 100%;
+  // margin:50px auto;
   padding-bottom: 10px;
   min-width: 300px;
-  box-shadow: 0 0 10px rgba(0,0,0,.05);
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
 }
 
 .svg-icon-hull{

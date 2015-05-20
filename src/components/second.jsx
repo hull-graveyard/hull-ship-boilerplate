@@ -13,7 +13,7 @@ var Second = React.createClass({
   },
   render: function() {
     return <div>
-      <HullStyle {...this.props.settings} right_color={"#ff6600"}/>
+      <HullStyle {...this.props.settings}  document={this.props.engine.document} right_color={"#ff6600"}/>
       <hr/>
       <h1>Hull Sandboxed Ship</h1>
       <p>

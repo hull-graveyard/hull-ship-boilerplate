@@ -16,10 +16,14 @@ import MainStyles from '../styles/main.scss';
  * @return {React Component} A style tag
  */
 var HullStyle = React.createClass({
+  getDefaultProps: function() {
+    return {
+      document: {}
+    };
+  },
   componentDidMount: function() {
-    var cs = document.currentScript || document._currentScript
-    if(cs && cs.ownerDocument){
-      MainStyles.use(cs.ownerDocument.body);
+    if(this.props.document.head){
+      MainStyles.use(this.props.document.head);
     }
   },
   componentWillUnmount: function() {
@@ -46,13 +50,13 @@ var HullStyle = React.createClass({
         background-image: linear-gradient(to right, ${left_color} 0%,  ${right_color} 100%);
         padding: 0 0 0 0;
       }
-    `
+    ` + ".s2{color:#0E1FC7} .s2:after{color: #0E1FC7; content:\" = 2 inline, wrong order\";} .s2:after{content:\" = 2 inline\";}"
     return style
   },
   render: function() {
     // return <div></div>
     // Insert any css you want here. Live updates FTW
-    return <style type="text/css">{this.getStyle()}</style>;
+    return <style type="text/css" dangerouslySetInnerHTML={{__html:this.getStyle()}}></style>;
   }
 
 });

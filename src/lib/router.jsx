@@ -7,7 +7,7 @@ import Second  from '../components/second';
 
 var App = React.createClass({
   render: function() {
-    return (<Router.RouteHandler />);
+    return (<Router.RouteHandler {...this.props}/>);
   }
 });
 

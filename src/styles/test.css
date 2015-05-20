@@ -1,8 +1,10 @@
-.test-message:after {
-    content: 'Link Stylesheet loaded out of order';
-    color: #F60;
+.s2, .s3, .s4, .s5{
+  color: #572B00;
 }
-.test-message:after {
-    content: 'Link Stylesheet loaded in order';
-    color: #ccc;
+.s2:after, .s3:after, .s4:after, .s5:after { 
+  color: #572B00;
+  content:' = 5 test.css, wrong order';
+}
+.s2:after, .s3:after, .s4:after, .s5:after { 
+  content:' = 5 test.css';
 }

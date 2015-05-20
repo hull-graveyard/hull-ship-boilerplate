@@ -1,14 +1,11 @@
 <body>
   <!-- Put all your markup here -->
 
-  <h1>Loading</h1>
   <div id="ship"></div>
 
 
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-  </button>
+  <button type="button" class="btn btn-xs btn-secondary" data-toggle="modal" data-target="#myModal">Launch demo modal</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -29,25 +26,35 @@
 
   <!-- DO NOT put a Doctype, HTML, HEAD or BODY tag. This is an Import, not a full document -->
 
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="styles/test.css">
+  <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 
   <!-- You don't need Hull.js here, it will be made available -->
-  <script src="ship.js" async></script>
+  <script src="ship.js"></script>
 
+
+  <!-- This is the HTML Import that will be embedded by Hull -->
   <!--
     Content will get cloned and inserted in every element matching the deployment options for a given platform
     For Facebook Pages and Iframe-type deployments, it will be embedded directly in the host's <body>
   -->
-
-  <!-- This is the HTML Import that will be embedded by Hull -->
   <!-- <link> styles will be cloned and used -->
   <!-- Inline styles will be applied immediately. -->
   <style>
     /*Head Styles from HTML Import*/
-    h1, h2{ color: #E75F45; /*Red*/ }
+    .s2,.s3, .s4{
+      color: #57935A;
+    }
+    .s2:after, .s3:after, .s4:after{ 
+      color: #57935A;
+      content:' = 4 ship.html, wrong order';
+    }
+    .s2:after, .s3:after, .s4:after{ 
+      content:' = 4 ship.html';
+    }
+    h1{ color: #E75F45; }
     a, a:active, a:hover, a:focus{ color: #0093e6; text-decoration: none; }
   </style>
 

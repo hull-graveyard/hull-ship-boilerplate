@@ -32,7 +32,7 @@
     "gh-pages": "^0.2.0",
     "object-assign": "^2.0.0",
     "react": ">=0.13.1",
-    "react-router": "^0.13.2",
+    "react-router": "jerrysu/react-router#58c3d62be5d98dbf1afbbd7ceaf4d1809ec27b28",
     "underscore": "^1.8.2",
     "underscore-contrib": "^0.3.0"
   },
