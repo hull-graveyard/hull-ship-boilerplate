@@ -29,7 +29,6 @@
   ],
   "dependencies": {
     "color": "^0.7.3",
-    "gh-pages": "^0.2.0",
     "object-assign": "^2.0.0",
     "react": ">=0.13.1",
     "react-router": "jerrysu/react-router#58c3d62be5d98dbf1afbbd7ceaf4d1809ec27b28",
@@ -37,6 +36,7 @@
     "underscore-contrib": "^0.3.0"
   },
   "devDependencies": {
+    "gh-pages": "^0.2.0",
     "moment": "^2.9.0",
     "autoprefixer-loader": "^1.1.0",
     "babel": "^4.4.5",
