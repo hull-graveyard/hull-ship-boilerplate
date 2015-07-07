@@ -8,6 +8,7 @@ var del              = require("del");
 var runSequence      = require("run-sequence");
 var notifier         = require("node-notifier");
 var ngrok            = require("ngrok");
+var ghPages          = require("gh-pages");
 
 var gulp             = require("gulp");
 var gulpLoadPlugins  = require("gulp-load-plugins");
@@ -85,18 +86,23 @@ var ngrokServe = function(subdomain){
   var env = process.env;
   if (env.NGROK_AUTHTOKEN) {
     options.authtoken = env.NGROK_AUTHTOKEN;
-  }
-  if(env.NGROK_SUBDOMAIN || subdomain){
-    options.subdomain = env.NGROK_SUBDOMAIN || subdomain;
+
+    if(env.NGROK_SUBDOMAIN || subdomain){
+      options.subdomain = (env.NGROK_SUBDOMAIN || subdomain).replace(/-/g,'');
+    }
   }
   ngrok.connect(options, function (error, url) {
-    if (error) throw new $.util.PluginError("ship:server", error);
-    url = url.replace("https", "http");
+    if (error) {
+      throw new gutil.PluginError('ship:server', error);
+    }
+
+    url = url.replace('https', 'http');
     notify({message:"Ngrok Started on "+url});
-    $.util.log("[ship:server]", url);
-    opn(url);
+
+    gutil.log('[ship:server]', url);
   });
-};
+}
+
 
 /**
  * GULP TASKS START HERE
@@ -182,5 +188,5 @@ gulp.task("webpack:server", function() {
 // Deploy production bundle to gh-pages.
 gulp.task("gh:deploy", function (callback) {
   notify("Deploying "+config.outputFolder+" to Github Pages");
-  $.ghPages.publish(path.join(process.cwd(), config.outputFolder), callback);
+  ghPages.publish(path.join(process.cwd(), config.outputFolder), callback);
 });
