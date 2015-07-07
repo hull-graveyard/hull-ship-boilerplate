@@ -28,7 +28,7 @@ var webpackConfig    = require("./webpack.config");
 gulp.task("default", ["server"]);
 gulp.task("serve",   ["server"]);
 
-gulp.task("server",  function(callback) {runSequence("clean", "copy-files:watch", "webpack:server", callback); });
+gulp.task("server",  function(callback) {runSequence("lint:watch", "clean", "copy-files:watch", "webpack:server", callback); });
 gulp.task("build",   function(callback) {runSequence("lint", "clean", "copy-files", "webpack:build", callback); });
 gulp.task("deploy",  function(callback) {runSequence("build", "gh:deploy", callback); });
 
@@ -65,6 +65,12 @@ var copyFiles = function(callback){
   }
 };
 
+var lint = function(callback){
+  return gulp.src(config.jsFiles)
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+}
+
 // Handle Gulp Errors
 var handleError = function(err, taskName){
   if(err){
@@ -85,11 +91,10 @@ var ngrokServe = function(subdomain){
   }
   ngrok.connect(options, function (error, url) {
     if (error) throw new $.util.PluginError("ship:server", error);
-
     url = url.replace("https", "http");
     notify({message:"Ngrok Started on "+url});
-
     $.util.log("[ship:server]", url);
+    opn(url);
   });
 };
 
@@ -110,6 +115,17 @@ gulp.task("copy-files:watch", function(){
   gulp.watch(_.keys(config.files),copyFiles);
 });
 
+
+
+
+gulp.task("lint", function() {
+  lint().pipe($.eslint.failAfterError());
+});
+gulp.task("lint:watch", function() {
+  lint();
+  var lintLater = _.debounce(lint, 500);
+  gulp.watch(config.jsFiles, lintLater)
+});
 
 //Production Build.
 //Minified, clean code. No demo keys inside.
@@ -159,7 +175,6 @@ gulp.task("webpack:server", function() {
     $.util.log("["+taskName+"] started at ", url);
     notify({message:"Dev Server Started"});
     ngrokServe(config.libName);
-    opn(url);
   });
 });
 
@@ -168,12 +183,4 @@ gulp.task("webpack:server", function() {
 gulp.task("gh:deploy", function (callback) {
   notify("Deploying "+config.outputFolder+" to Github Pages");
   $.ghPages.publish(path.join(process.cwd(), config.outputFolder), callback);
-});
-
-
-gulp.task("lint", function() {
-  return gulp.src(["src/**/*.js", "src/**/*.jsx"])
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.eslint.failAfterError());
 });

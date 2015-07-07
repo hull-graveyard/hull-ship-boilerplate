@@ -22,14 +22,15 @@ var hotReload = true;
 // THESE ARE THE JS FILES USED AS ENTRY POINTS TO COMPILE YOUR APP
 
 var entry = {
-  ship:  "./"+sourceFolder+"/ship.js",
-  index: "./"+sourceFolder+"/index.js"
+  ship:  "./"+sourceFolder+"/ship.js"
 };
 
 // ADDITIONAL FILES TO BE COPIED BY GULP
 function gulpDest(out){
   return path.join(outputFolder,assetsFolder,out);
 }
+
+var jsFiles = ["src/**/*.js", "src/**/*.jsx"];
 
 var files = {
   "src/styles/*.css"  : gulpDest("styles/"),
@@ -109,6 +110,7 @@ module.exports = {
   displayName        : displayName,
 
   files              : files,
+  jsFiles            : jsFiles,
 
   outputFolder       : outputFolder,
   assetsFolder       : assetsFolder,
