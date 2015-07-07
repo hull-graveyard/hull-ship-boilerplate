@@ -1,11 +1,34 @@
-import App from './app';
+// This is where our actual App begings.
 
-// This is the entry point for the Ship when it's used as an HTML Import.
-// It's standalone and boots when Hull exists and calls onEmbed
+// Our boilerplate uses React.
+// We love it, and we thing you will too.
+import React      from 'react';
 
-if (window.Hull){
-  // This is called when the ship has been embedded in the page.
-  Hull.onEmbed(App.start);
+// The engine contains all the logic and state for the app
+import Engine     from './lib/engine';
+
+// The views are described in the router.
+import ShipRouter from './lib/router';
+
+// Entry point for the Library
+// Don't start the app from here
+// Call Ship.start on the callback  from your script to boot
+var start = function(element, deployment, hull){
+
+  // Create an Engine. We like this pattern even though it's not mandatory.
+  var engine = new Engine(deployment, hull);
+
+  // Automatically resize the frame to match the Ship Content
+  // Note: We use a local hull instance, not Hull directly.
+  hull.autoSize(400)
+
+  // Start the router
+  ShipRouter.run(function (Handler, state) {
+    // On location change, Update the Engine state.
+    React.render(React.createElement(Handler, {engine: engine}), element);;
+  });
 }
 
-module.exports=App
+Hull.onEmbed(start);
+
+module.exports = start
