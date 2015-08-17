@@ -5,14 +5,17 @@ var _                = require("underscore");
 var path             = require("path");
 
 var del              = require("del");
-var runSequence      = require("run-sequence");
+var opn              = require('opn')
+
 var notifier         = require("node-notifier");
-var ngrok            = require("ngrok");
+var runSequence      = require("run-sequence");
+
 var ghPages          = require("gh-pages");
+var ngrokServer      = require('./lib/ngrok-server');
+
 
 var gulp             = require("gulp");
 var gulpLoadPlugins  = require("gulp-load-plugins");
-var opn              = require('opn')
 var $                = gulpLoadPlugins();
 
 
@@ -57,7 +60,7 @@ var webpackFeedbackHandler = function(err, stats){
 
 // Copy static files from the source to the destination
 var copyFiles = function(callback){
-  _.map(config.files,function(dest, src){
+  _.map(config.gulp.files,function(dest, src){
     gulp.src(src).pipe(gulp.dest(dest));
   });
   notify("Vendors Updated");
@@ -67,7 +70,7 @@ var copyFiles = function(callback){
 };
 
 var lint = function(callback){
-  return gulp.src(config.jsFiles)
+  return gulp.src(config.gulp.jsFiles)
     .pipe($.eslint())
     .pipe($.eslint.format())
 }
@@ -80,34 +83,11 @@ var handleError = function(err, taskName){
   }
 };
 
-// Setup a Ngrok server
-var ngrokServe = function(subdomain){
-  var options = { port: config.serverPort };
-  var env = process.env;
-  if (env.NGROK_AUTHTOKEN) {
-    options.authtoken = env.NGROK_AUTHTOKEN;
-
-    if(env.NGROK_SUBDOMAIN || subdomain){
-      options.subdomain = (env.NGROK_SUBDOMAIN || subdomain).replace(/-/g,'');
-    }
-  }
-  ngrok.connect(options, function (error, url) {
-    if (error) {
-      throw new gutil.PluginError('ship:server', error);
-    }
-
-    url = url.replace('https', 'http');
-    notify({message:"Ngrok Started on "+url});
-
-    gutil.log('[ship:server]', url);
-  });
-}
-
-
-/**
- * GULP TASKS START HERE
+/*
+  *******************************
+  CLEAN, COPY
+  *******************************
 */
-
 
 // Cleanup build folder
 gulp.task("clean",   function(cb)       {del(["./"+config.outputFolder+"/**/*"], cb); });
@@ -118,20 +98,33 @@ gulp.task("copy-files", copyFiles);
 // Watch files for changes and copy them
 gulp.task("copy-files:watch", function(){
   copyFiles();
-  gulp.watch(_.keys(config.files),copyFiles);
+  gulp.watch(_.keys(config.gulp.files),copyFiles);
 });
 
 
 
+/*
+  *******************************
+  LINT
+  *******************************
+*/
 
 gulp.task("lint", function() {
   lint().pipe($.eslint.failAfterError());
 });
+
 gulp.task("lint:watch", function() {
   lint();
   var lintLater = _.debounce(lint, 500);
-  gulp.watch(config.jsFiles, lintLater)
+  gulp.watch(config.gulp.jsFiles, lintLater)
 });
+
+
+/*
+  *******************************
+  BUILD : Production
+  *******************************
+*/
 
 //Production Build.
 //Minified, clean code. No demo keys inside.
@@ -151,7 +144,13 @@ gulp.task("webpack:build", function(callback) {
 
 // Dev Build
 // Create the webpack compiler here for caching and performance.
-var webpackDevCompiler = webpack(webpackConfig.development.browser);
+var webpackDevCompiler = webpack(webpackConfig.development);
+
+/*
+  *******************************
+  BUILD : Dev
+  *******************************
+*/
 
 // Build a Dev version of the project. Launched once on startup so we can have eveything copied.
 gulp.task("webpack:build:dev", function(callback) {
@@ -165,6 +164,13 @@ gulp.task("webpack:build:dev", function(callback) {
   });
 });
 
+
+/*
+  *******************************
+  SERVER : Dev
+  *******************************
+*/
+
 // Launch webpack dev server.
 gulp.task("webpack:server", function() {
   var taskName = "webpack:server";
@@ -172,18 +178,29 @@ gulp.task("webpack:server", function() {
     contentBase: config.outputFolder,
     publicPath: "/"+config.assetsFolder,
     headers: { "Access-Control-Allow-Origin": "*" },
-    hot: config.hotReload,
+    hot: webpackConfig.development.hotReload,
     stats: {colors: true }
   }).listen(config.serverPort, function(err) {
     handleError(err, taskName);
     // Dump the preview URL in the console, and open Chrome when launched for convenience.
-    var url = webpackConfig.development.browser.output.publicPath+"webpack-dev-server/";
+    var url = webpackConfig.development.output.publicPath+"webpack-dev-server/";
     $.util.log("["+taskName+"] started at ", url);
     notify({message:"Dev Server Started"});
-    ngrokServe(config.libName);
+    ngrokServer(config.serverPort, config.libName, function (error, url) {
+      if (error) { throw new $.util.PluginError('ship:server', error); }
+      url = url.replace('https', 'http');
+      notify({message:"Ngrok Started on "+url});
+      $.util.log('[ship:server]', url);
+    });
   });
 });
 
+
+/*
+  *******************************
+  Deploy
+  *******************************
+*/
 
 // Deploy production bundle to gh-pages.
 gulp.task("gh:deploy", function (callback) {
