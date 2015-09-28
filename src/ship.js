@@ -11,8 +11,8 @@ import React      from "react";
 // The engine contains all the logic and state for the app
 import Engine     from "./lib/engine";
 
-// The views are described in the router.
-import ShipRouter from "./lib/router";
+// The engine contains all the logic and state for the app
+import Ship     from "./components/ship";
 
 // Entry point for the Library
 // Don't start the app from here
@@ -22,17 +22,10 @@ var start = function(element, deployment, hull){
   // Create an Engine. We like this pattern even though it's not mandatory.
   var engine = new Engine(deployment, hull);
 
-  // Automatically resize the frame to match the Ship Content
-  // Note: We use a local hull instance, not Hull directly.
-  hull.autoSize(400);
-
   // Start the router
-  ShipRouter.run(function (Handler, state) {
-    // On location change, Update the Engine state.
-    React.render(React.createElement(Handler, Object.assign({engine}, state)), element);
-  });
+  React.render(<Ship engine={engine}/>, element);
 };
 
-Hull.onEmbed(start);
+Hull && Hull.onEmbed && Hull.onEmbed(start);
 
 module.exports = start;

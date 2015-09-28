@@ -1,74 +1,23 @@
-$base: #ff0000;
-
-// Body Styles don't leak into the page !
-body{
-  text-align: center;
+:global(#ship){
+  margin: 30px 0;
 }
 
-h1 { color: yellow; /* Yellow*/  }
-h1 { color: #4BC2B8; /* Green */ }
-
-.s2,.s3{
-  color: #44B0B0;
-}
-.s2:after, .s3:after { 
-  color: #44B0B0;
-  content:' = 3 main.scss, wrong order';
-}
-.s2:after, .s3:after { 
-  content:' = 3 main.scss';
-}
-
-hr{
-  height: 10px;
-  background-color: #4BC2B8;
-  padding: 0 0 0 0;
-  margin:0 0 16px 0;
-}
-
-#ship{
-  width: 100%;
-  // margin:50px auto;
-  padding-bottom: 10px;
-  min-width: 300px;
+.ship{
   box-shadow: 0 0 10px rgba(0,0,0,.1);
-}
+  padding: 10px 0;
 
-.svg-icon-hull{
-  opacity: .1;
-  margin:30px auto 0;
-  display:block;
+  h3 {
+    color: #4BC2B8; /* Green */
+  }
 
-  .svg-hull-upper, .svg-hull-lower{
-    transform-origin: 50%;
-    transition: all .2s ease-out;
-    animation: rainbow;
+  hr{
+    height: 1px;
+    background-color: #4BC2B8;
+    padding: 0 0 0 0;
+    margin:0 0 16px 0;
   }
 }
 
-.svg-share-icon-download{
-  width:64px;
-  margin:0 auto;
-  display:block;
-  transform: scale(.9);
-  &, .svg-share-icon-arrow, .svg-share-icon-ground{
-    transform-origin: 50%;
-    transition: all .2s ease-out;
-  }
-  &:hover{
-    .svg-share-icon-arrow, .svg-share-icon-ground{
-      transform: translate3d(0,0,0) scale(1); 
-    }
-  }
-}
-
-.svg-share-icon-arrow  { transform: translate3d(0,-20%,0) scale(.9); }
-.svg-share-icon-ground { transform: translate3d(0,20%,0) scale(.9); }
-
-@keyframes rainbow {
-  @for $i from 0 through 10 {
-    #{$i* 10%}  {
-      fill: adjust-hue($base, $i *36deg);
-    }
-  }
+.title{
+  font-weight: 200;
 }

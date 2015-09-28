@@ -5,7 +5,8 @@
 // NOT COMPLETE
 // NOT COMPLETE
 
-var assign = require("object-assign");
+import assign from "object-assign";
+import I18n from "./i18n";
 var Emitter = require("events").EventEmitter;
 
 /**
@@ -15,16 +16,13 @@ var Emitter = require("events").EventEmitter;
  * understand
  */
 
-var Constants = {
-  INTRODUCTION_STEP: "introduction_step",
-  RESULT_STEP: "result_step"
-};
-
 var CHANGE_EVENT="change";
 
 function Engine(deployment, hull) {
   var self=this;
-  self.document = hull.getDocument();
+
+  self.hull     = hull;
+  I18n.setTranslations(deployment.ship.translations);
 
   var onChange = function() {
     self.emitChange();
@@ -36,11 +34,16 @@ function Engine(deployment, hull) {
 }
 
 assign(Engine.prototype, Emitter.prototype, {
+  getState: function() {
+    return {
+      settings: this._ship.settings,
+      user: this.hull.currentUser()
+    };
+  },
   addChangeListener: function(listener) {this.addListener(CHANGE_EVENT, listener); },
   removeChangeListener: function(listener) {this.removeListener(CHANGE_EVENT, listener); },
-  emitChange: function(message) {this.emit(CHANGE_EVENT, message); }
+  emitChange: function(message) {this.emit(CHANGE_EVENT, message); },
+  translate: I18n.translate,
 });
-
-Engine.Constants = Constants;
 
 module.exports = Engine;

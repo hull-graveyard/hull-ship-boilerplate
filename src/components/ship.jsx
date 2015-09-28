@@ -2,47 +2,44 @@
  * This is where the Ship code actually begins.
  **/
 
-import React     from "react";
-import HullStyle from "./hull-style";
-import Icons     from "./hull-icons";
-import {Link}    from "react-router";
+import React         from "react";
+import DynamicStyles from "./dynamic-styles";
+import Styles        from "../styles/main.scss";
 
 var Ship = React.createClass({
-  propTypes: {
-    sandbox: React.PropTypes.bool
-  },
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       engine : {},
       settings : {}
     };
   },
-  render: function() {
+  getInitialState() {
+    return {
+      styles:{
+        locals:{}
+      } 
+    };
+  },
+  componentWillMount() {
+    let styles = Styles.use();
+    this.setState({styles, classes:styles.locals});
+  },
+  componentWillUnmount() {
+    Styles.unuse();
+  },
+  render() {
+    // this.state.locals.ship -> the local, encoded className for the .ship class in main.css.
+    // checkout https://github.com/css-modules/css-modules
+    let { classes } = this.state
     return (
-      <div>
-        <HullStyle {...this.props.settings} document={this.props.engine.document}/>
+      <div className={classes.ship}>
+        <DynamicStyles rootClass={classes.ship} {...this.props.settings} document={this.props.engine.document}/>
+        <h3 className={classes.title}>{this.props.engine.translate("Ship Started")}</h3>
         <hr/>
-        <h1>Hull Ship Boilerplate</h1>
-        <span className='s2'>2</span> <span className='s3'>3</span> <span className='s4'>4</span> <span className='s5'>5</span>
-        <div className="row">
-          <div className="col-sm-4 col-sm-offset-4">
-            <div className="well" style={{marginTop:12}}>
-              <span className="glyphicon glyphicon-piggy-bank"></span>
-            </div>
-            <div className="visible-xs-block">Iframe mode: Media queries apply</div>
-          </div>
-        </div>
-
         <p>
-          <Icons.Hull {...this.props.settings}/>
-        </p>
-        <p>
-          <a href='https://github.com/hull-ships/hull-ship-boilerplate/archive/master.zip' className='download-link'>
-            <Icons.Download {...this.props.settings} style={{marginBottom:5}}/> Download Boilerplate
-          </a>
-        </p>
-        <p>
-          <Link to='second' className='download-link'>See second page</Link>
+          <small>
+            <a href='https://github.com/hull-ships/hull-ship-boilerplate/archive/master.zip' className='download-link'>{this.props.engine.translate("Download Boilerplate")}</a>
+          </small>
         </p>
       </div>
     );

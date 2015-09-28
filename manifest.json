@@ -2,7 +2,7 @@
   "name": "Hull Ship Boilerplate",
   "description": "Hull Ship Boilerplate",
   "picture": "picture.png",
-  "index": "ship.html",
+  "index": "ship.js",
   "version": "0.0.2",
   "locales": ["en"],
   "settings": [],

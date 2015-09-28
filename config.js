@@ -1,123 +1,294 @@
 "use strict";
 
 /*global module, require, process, __dirname */
-var webpack = require("webpack");
-var path = require("path");
-var pkg = require("./package.json");
-var manifest = require("./manifest.json");
-var moment = require("moment");
-var autoprefixer = require('autoprefixer-core');
-var easings = require('postcss-easings');
-var csswring = require('csswring');
 
+var _            = require("lodash");
+var webpack      = require("webpack");
+var path         = require("path");
+var moment       = require("moment");
+
+var pkg          = require("./package.json");
+var manifest     = require("./manifest.json");
 
 // DO NOT CHANGE FOLDERS
 // WIHTOUT UPDATING PACKAGE.JSON TOO.
-var sourceFolder       = "src";
-var outputFolder       = "dist";
-var assetsFolder       = "";
-var serverPort         = process.env.PORT||8081;
-var previewUrl         = "http://localhost:"+serverPort;
-var displayName        = manifest.name||pkg.name;
-var extensions         = ["", ".js", ".jsx", ".css", ".scss"];
-var modulesDirectories = ["node_modules", "bower_components", "src/vendor"];
-var hotReload          = true;
+var sourceFolder = "src";
+var outputFolder = "dist";
+var assetsFolder = "";
+var serverPort   = process.env.PORT||8081;
+var previewUrl   = "http://localhost:"+serverPort;
 
-// Helper to copy additionnal folders from one place to another.
-function gulpDest(out){
-  return path.join(outputFolder,assetsFolder,out);
-}
+var hotReload = true;
 
-var output = {
-  path: path.join(__dirname, outputFolder,assetsFolder,"/"),
-  pathinfo: true,
-  filename: "[name].js",
-  chunkFileName: "[name].chunk.js",
-  libraryTarget: "umd",
-  library: displayName,
-  publicPath: assetsFolder+"/"
+var libName = pkg.name;
+var displayName = manifest.name||libName;
+
+// DO NOT CHANGE SHIP ENTRY
+// WITHOUT UPDATING PACKAGE.JSON TOO
+// THESE ARE THE JS FILES USED AS ENTRY POINTS TO COMPILE YOUR APP
+
+
+/*
+  --------------------------------
+  Compiled JS files
+  --------------------------------
+*/
+var entry = {
+  ship:  "./"+sourceFolder+"/ship.js",
+  index: "./"+sourceFolder+"/index.js"
 };
 
-var cssIncludes   = modulesDirectories.map(function(include){
-  return ("includePaths[]="+path.resolve(__dirname, include));
-}).join("&");
+/*
+  --------------------------------
+  Sketch icons extraction
+  --------------------------------
+*/
+var sketch = {
+  export : "artboards",
+  formats: "svg"
+};
 
-// Webpack Loaders stack
-var loaders = [
-  {test: /\.json$/,                loaders: ["json-loader"] },
-  {test: /\.js$/,                  loaders: ["babel-loader"], exclude: /node_modules|bower_components/},
-  {test: /\.jsx$/,                 loaders: ["react-hot", "babel-loader"], exclude: /node_modules|bower_components/},
-  {test: /\.(css|scss)$/,          loaders: ["style/useable", "css-loader", "autoprefixer-loader?browsers=last 2 version", "sass-loader?outputStyle=expanded&"+cssIncludes]},
-  {test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
+/*
+  --------------------------------
+  SVGO Icons Optimization
+  --------------------------------
+*/
+var imagemin = {
+  progressive: true,
+  svgoPlugins: [{
+    removeViewBox: false,
+    convertTransform:true
+  }]
+};
+
+/*
+  --------------------------------
+  iconfont generation
+  --------------------------------
+*/
+var icons = {
+  folder: path.join(sourceFolder,"icons"),
+  src   : path.join(sourceFolder,"icons","**","*"),
+  fontPath: path.join("../",assetsFolder,"fonts"),
+
+  output:{
+    sprite : path.join(outputFolder,assetsFolder),
+    font   : path.join(outputFolder,assetsFolder,"fonts"),
+    css    : path.join(sourceFolder,"styles"),
+  },
+
+  sprite:{
+    shape: {
+      dimension : { maxWidth : 32, maxHeight: 32 },
+      spacing: { padding: 0 }
+    },
+    mode : {
+      view : { bust: false, dest: "sprite", render: { scss: false } }
+    }
+  },
+
+  font:{
+    fontName     : libName+"Font",
+    fontHeight   : 1001,
+    normalize    : true,
+    formats      : ["ttf","eot","woff","svg"],
+    timestamp    : Math.round(Date.now()/1000)
+  }
+};
+
+
+/*
+  --------------------------------
+  Copied files
+  --------------------------------
+*/
+var files = {
+  "src/vendors/**/*" : path.join(outputFolder,assetsFolder,"vendors"),
+  "src/images/**/*"  : path.join(outputFolder,assetsFolder,"images"),
+  "src/icons/**/*"   : path.join(outputFolder,assetsFolder,"icons"),
+  "src/locales/**/*" : path.join(outputFolder,"locales"),
+  "manifest.json"    : outputFolder,
+  "src/*.ico"        : outputFolder,
+  "src/*.jpg"        : outputFolder,
+  "src/*.png"        : outputFolder,
+  "src/*.html"       : outputFolder,
+  "CNAME"            : outputFolder,
+};
+
+
+
+var output = {
+  path          : path.join(__dirname, outputFolder, assetsFolder,"/"),
+  pathinfo      : true,
+  filename      : "[name].js",
+  chunkFileName : "[name].chunk.js",
+  libraryTarget : "umd",
+  library       : displayName,
+  publicPath    : assetsFolder+"/"
+};
+
+var resolve = { extensions : ["", ".js", ".jsx", ".css", ".scss"] };
+
+var cssIncludes = ["node_modules", "src/vendor"].map(function(include){return ("includePaths[]="+path.resolve(__dirname, include));}).join("&");
+
+
+
+// SASS-LIKE : 
+// postcss-simple-vars
+// postcss-advanced-vars
+// postcss-sassy-mixins
+// postcss-simple-extend
+// postcss-vertical-rhythm
+var postcss = [
+  require("precss")({ /* options */ }), //Sass-like syntax
+  require("postcss-round-subpixels"),
+  /*IE*/
+    require("postcss-pseudoelements"),
+    require("postcss-color-rgba-fallback"),
+    require("postcss-opacity"),
+    require("postcss-vmin"),
+  /*END IE*/
+  require("postcss-clearfix"),
+  require("postcss-initial"), //all:initial
+  require("autoprefixer"), //Prefixes
+  require("cssnano")(), //Condense & Optimize
 ];
 
+// about babel : it"s VERY SLOW. DO NOT APPLY IT TO EVERY SOURCE FILE. see the Excludes we applied
+var loaderLibrary = {
+  json     : {test: /\.json$/,                loader: "json" },
+  css      : {test: /\.(css|scss)$/,          loaders: ["style/useable", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass?outputStyle=expanded&"+cssIncludes]},
+  file     : {test: /\.jpe?g$|\.gif$|\.png|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader : "file" },
+  svg      : {test: /\.svg$/,   loader : "svg-inline" },
+  js       : {test: /\.(js)$/,  loader: "babel", exclude: /node_modules|src\/vendors/},
+  prodJSX  : {test: /\.(jsx)$/, loader: "babel", },
+  devJSX   : {test: /\.(jsx)$/, loaders: ["react-hot", "babel"]}
+};
+
+var devLoaders = [
+  loaderLibrary.json,
+  loaderLibrary.css,
+  loaderLibrary.file,
+  loaderLibrary.js,
+  (hotReload ? loaderLibrary.devJSX : loaderLibrary.prodJSX)
+];
+
+var loaders = [
+  loaderLibrary.json,
+  loaderLibrary.css,
+  loaderLibrary.file,
+  loaderLibrary.js,
+  loaderLibrary.prodJSX
+];
+
+
+// We remove the "dist" from the filenames for demo and index.html in package.json
+// Package.json expects our files to be addressable from the same repo
+// We put them in `dist` to have a clean structure but then we need to build them in the right place
 var plugins = [
+  new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+  new webpack.optimize.OccurenceOrderPlugin(),
+  // new webpack.optimize.CommonsChunkPlugin({name: "vendors", filename: "vendors.js", minChunks: Infinity}),
   new webpack.DefinePlugin({
     "BUILD_DATE" : JSON.stringify(moment().format("MMMM, DD, YYYY, HH:mm:ss")),
-    "PUBLIC_PATH": JSON.stringify(output.publicPath),
-    'GIT_COMMIT' : JSON.stringify(process.env.CIRCLE_SHA1 || "")
-  }),
-  new webpack.ResolverPlugin(
-    new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-  ),
-  new webpack.optimize.OccurenceOrderPlugin()
+    "PUBLIC_PATH": JSON.stringify(output.publicPath)
+  })
 ];
 
-var postCss = function(){
-  return [ autoprefixer({browsers:["last 2 version"]}), easings.easings, csswring() ];
+
+/*
+  ----------------------------
+  NGROK
+  ----------------------------
+*/
+var ngrok;
+if(process.env.NGROK_AUTHTOKEN) {
+  ngrok = {
+    port      : serverPort,
+    authtoken : process.env.NGROK_AUTHTOKEN,
+    subdomain : libName
+  };
 }
 
-var webpackConfig = {
-  name: 'browser',
-  hotReload: hotReload,
-
-  // Key : What gets built as an output,
-  // Value : from Where.
-  entry: { ship:  "./"+sourceFolder+"/ship.js" },
-  output: output,
-
-  plugins: plugins,
-
-  module: {
-    loaders: loaders
-  },
-
-  resolve  : {
-    root: [path.join(__dirname, "bower_components"), path.join(__dirname, "node_modules")],
-    extensions: extensions
-  },
-  // Postcss config used in postcss-loader.
-  // Autopefixer, 
-  // Easing equations,
-  // CSSWring Minifier
-  postCss: postCss
+/*
+  ----------------------------
+  CLOUDFRONT
+  ----------------------------
+*/
+var cloudfront;
+if(process.env.AWS_KEY && process.env.AWS_SECRET){
+  var cloudfrontInvalidations = ["/"+libName+"/*"];
+  cloudfront = {
+    config:{
+      credentials:{
+        "accessKeyId":process.env.AWS_KEY,
+        "secretAccessKey":process.env.AWS_SECRET,
+      },
+      distributionId:process.env.CLOUDFRONT_DISTRIBUTION_ID,
+      region:"us-east-1"
+    },
+    invalidationBatch:{
+      CallerReference: new Date().toString(),
+      Paths:{
+        Quantity:cloudfrontInvalidations.length,
+        Items:cloudfrontInvalidations
+      }
+    }
+  };
 }
 
-var gulpConfig = {
-  // Additional files to copy as part of the build process
-  files              : {
-    "src/styles/*.css"  : gulpDest("styles/"),
-    "src/vendors/**/*"  : gulpDest("vendors/"),
-    "src/images/**/*"   : gulpDest("images/"),
-    "manifest.json"     : outputFolder,
-    "src/*.png"         : outputFolder,
-    "src/*.html"        : outputFolder,
-    "CNAME"             : outputFolder,
-  },
-  jsFiles            : [ "src/**/*.js", "src/**/*.jsx" ]
+
+
+/* 
+  ----------------------------
+  DEV MODE / HOT RELOAD overrides
+*/
+var devPlugins;
+if(hotReload){
+  var devEntry = _.reduce(entry,function(entries,v,k){
+    entries[k] = [ "webpack-dev-server/client?"+previewUrl, "webpack/hot/only-dev-server", v ];
+    return entries;
+  },{});
+  devPlugins = plugins.concat([new webpack.HotModuleReplacementPlugin()]);
+} else {
+  devEntry = entry;
+  devPlugins = plugins;
 }
 
 module.exports = {
-  libName            : pkg.name,
+
+  libName            : libName,
   displayName        : displayName,
+
+  hotReload          : hotReload,
+  ngrok              : ngrok,
+  cloudfront         : cloudfront,
+
+  files              : files,
+
+  sketch              : sketch,
+  imagemin              : imagemin,
+  icons              : icons,
+
+  sourceFolder       : sourceFolder,
   outputFolder       : outputFolder,
   assetsFolder       : assetsFolder,
   serverPort         : serverPort,
   previewUrl         : previewUrl,
 
-  gulp               : gulpConfig,
-  webpack            : webpackConfig,
+  devEntry           : devEntry,
 
-  pkg                : pkg,
-  manifest           : manifest  
+  entry              : entry,
+  output             : output,
+
+  plugins            : plugins,
+  devPlugins         : devPlugins,
+  devLoaders         : devLoaders,
+
+  resolve            : resolve,
+  loaders            : loaders,
+
+  postcss            : postcss,
+
+  pkg                : pkg
 };

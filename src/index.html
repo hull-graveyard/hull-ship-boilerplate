@@ -7,25 +7,56 @@
   <script id="hull-js-sdk"
     platform-id="550aa67c96f452f4c4000bea"
     org-url="https://hull-demos.hullapp.io"
-    src="https://d3f5pyioow99x0.cloudfront.net/fe201cdafa0f43dde1d7b11690782f97bdb28316/hull.debug.js"
+    src="https://js.hull.io/0.9.0/hull.debug.js.gz"
     debug="true"
+    embed="false"
     verbose="true"></script>
-    <link rel="stylesheet" type="text/css" href='./styles/demo-style.css'>
+    <style type="text/css" media="screen">
+      body{
+        /*-webkit-font-smoothing: antialiased;*/
+        background-color: white;
+        color: #444;
+        font-family: "Helvetica Neue", arial, sans-serif;
+        font-size: 15px;
+        padding: 24px;
+        text-align: center;
+      }
+      hr{
+        height: 2px;
+        background-color: #EEE;
+        border:0;
+      }
+      p{
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      h1{
+        font-weight: 200;
+        margin-bottom: 24px;
+      }
+      .container{
+        max-width: 970px;
+        margin: 0 auto;
+      }
+      .log{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #CCC;
+        padding: 5px;
+        height: 100vh;
+        overflow: scroll;
+        opacity: .9;
+        text-align:left;
+      }
+    </style>
+    <script src="index.js" type="text/javascript" charset="utf-8" async defer></script>
 </head>
 <body>
   <div class="container">
     <h1>Hull Ship Boilerplate</h1>
     <hr>
-    <p>Everything below is isolated</p>
-    <div class="log"></div>
-    <h4>Scoped (In page + scoped CSS)</h4>
-    <div class="main well ship two">Loading</div>
-    <h4>Sandboxed (Virtual Iframe)</h4>
-    <div class="main well ship one">Loading</div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-      Unstyled Button
-    </button>
+    <div id='ship'>Loading</div>
   </div>
   <a href="https://github.com/hull-ships/hull-ship-boilerplate"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 </body>
