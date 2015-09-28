@@ -1,13 +1,13 @@
-"use strict";
-/*global require, module*/
+'use strict';
+/* global require, module */
 
 // NOT COMPLETE
 // NOT COMPLETE
 // NOT COMPLETE
 
-import assign from "object-assign";
-import I18n from "./i18n";
-var Emitter = require("events").EventEmitter;
+import assign from 'object-assign';
+import I18n from './i18n';
+const Emitter = require('events').EventEmitter;
 
 /**
  * The engine is a condensed and simplified version of the Flux architecture,
@@ -16,20 +16,20 @@ var Emitter = require("events").EventEmitter;
  * understand
  */
 
-var CHANGE_EVENT = "change";
+const CHANGE_EVENT = 'change';
 
 function Engine(deployment, hull) {
-  var self = this;
+  const self = this;
 
   self.hull = hull;
   I18n.setTranslations(deployment.ship.translations);
 
-  var onChange = function() {
+  const onChange = function() {
     self.emitChange();
   };
 
   // Subscribe to every Hull user event
-  hull.on("hull.user.*", onChange);
+  hull.on('hull.user.*', onChange);
   this.emitChange();
 }
 
@@ -37,7 +37,7 @@ assign(Engine.prototype, Emitter.prototype, {
   getState: function() {
     return {
       settings: this._ship.settings,
-      user: this.hull.currentUser()
+      user: this.hull.currentUser(),
     };
   },
   addChangeListener: function(listener) {

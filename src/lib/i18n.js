@@ -8,11 +8,11 @@ let _messages = {};
 function compileMessages() {
   _messages = {};
 
-  let mf = new MessageFormat(_locale);
+  const mf = new MessageFormat(_locale);
 
-  for (let k in _translations[_locale]) {
-    if (_translations[_locale].hasOwnProperty(k)) {
-      _messages[k] = mf.compile(_translations[_locale][k]);
+  for (const key in _translations[_locale]) {
+    if (_translations[_locale].hasOwnProperty(key)) {
+      _messages[key] = mf.compile(_translations[_locale][key]);
     }
   }
 }
@@ -35,19 +35,19 @@ function translate(message, data) {
     return message;
   }
 
-  let m = _messages[message];
+  let msg = _messages[message];
 
-  if (m == null) {
+  if (msg === null) {
     console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
 
-    let mf = new MessageFormat(_locale);
-    m = _messages[message] = mf.compile(message);
+    const format = new MessageFormat(_locale);
+    msg = _messages[message] = format.compile(message);
   }
 
   try {
-    return m(data);
-  } catch (e) {
-    console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
+    return msg(data);
+  } catch (err) {
+    console.error('[i18n] Cannot translate "' + message + '". ' + err.message); // eslint-disable-line
 
     return '[error] ' + message;
   }
@@ -61,5 +61,5 @@ export default {
   setLocale,
   setTranslations,
   translate,
-  hasTranslation
+  hasTranslation,
 };

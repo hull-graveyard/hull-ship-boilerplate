@@ -12,6 +12,7 @@ var config      = require('./config');
   'copy',
   'deploy',
   'format',
+  'lint',
   // 'iconfont',
   // 'iconsprite',
   'ngrok',
@@ -30,7 +31,7 @@ gulp.task('prepare', function(callback){
 });
 
 gulp.task('watch',   function(callback){
-  runSequence(['copy:watch', 'sass:watch'], callback);
+  runSequence(['copy:watch', 'sass:watch', 'lint:watch'], callback);
 });
 
 gulp.task('serve',   function(callback){

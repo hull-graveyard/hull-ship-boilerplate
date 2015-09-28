@@ -1,8 +1,4 @@
 {
-  "extends": "eslint-config-airbnb",
-  "env": {
-    "browser": true
-  },
   "globals": {
     "Hull": true
   },
@@ -15,7 +11,7 @@
     "no-loop-func": [0],
     "no-multi-spaces": [2],
     "no-param-reassign": [0],
-    "no-reserved-keys": [2],
+    "quote-props": [2, "consistent-as-needed"],
     "no-script-url": [0],
     "no-undefined": [2],
     "no-undef-init": [2],
@@ -26,7 +22,5 @@
     "react/react-in-jsx-scope": [2],
     "strict": [0]
   },
-  "plugins": [
-    "react"
-  ]
+  "extends": "airbnb"
 }

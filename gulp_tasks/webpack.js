@@ -12,7 +12,7 @@ function handleError(err) {
 // Raise errors on Webpack build errors
 function webpackFeedbackHandler(err, stats){
   handleError(err);
-  if(stats){
+  if (stats) {
     var st = stats.toJson();
 
     if(st.errors.length > 0){

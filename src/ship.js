@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /* global Hull, module*/
 
@@ -6,26 +6,26 @@
 
 // Our boilerplate uses React.
 // We love it, and we thing you will too.
-import React from "react";
+import React from 'react';
 
 // The engine contains all the logic and state for the app
-import Engine from "./lib/engine";
+import Engine from './lib/engine';
 
 // The engine contains all the logic and state for the app
-import Ship from "./components/ship";
+import Ship from './components/ship';
 
 // Entry point for the Library
 // Don't start the app from here
 // Call Ship.start on the callback  from your script to boot
-var start = function(element, deployment, hull) {
-
+const start = function(element, deployment, hull) {
   // Create an Engine. We like this pattern even though it's not mandatory.
-  var engine = new Engine(deployment, hull);
-
+  const engine = new Engine(deployment, hull);
   // Start the router
   React.render(<Ship engine={engine}/>, element);
 };
 
-Hull && Hull.onEmbed && Hull.onEmbed(start);
+if ( Hull && Hull.onEmbed ) {
+  Hull.onEmbed(start);
+}
 
 module.exports = start;
