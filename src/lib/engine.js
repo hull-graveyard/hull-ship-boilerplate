@@ -16,12 +16,12 @@ var Emitter = require("events").EventEmitter;
  * understand
  */
 
-var CHANGE_EVENT="change";
+var CHANGE_EVENT = "change";
 
 function Engine(deployment, hull) {
-  var self=this;
+  var self = this;
 
-  self.hull     = hull;
+  self.hull = hull;
   I18n.setTranslations(deployment.ship.translations);
 
   var onChange = function() {
@@ -40,9 +40,15 @@ assign(Engine.prototype, Emitter.prototype, {
       user: this.hull.currentUser()
     };
   },
-  addChangeListener: function(listener) {this.addListener(CHANGE_EVENT, listener); },
-  removeChangeListener: function(listener) {this.removeListener(CHANGE_EVENT, listener); },
-  emitChange: function(message) {this.emit(CHANGE_EVENT, message); },
+  addChangeListener: function(listener) {
+    this.addListener(CHANGE_EVENT, listener);
+  },
+  removeChangeListener: function(listener) {
+    this.removeListener(CHANGE_EVENT, listener);
+  },
+  emitChange: function(message) {
+    this.emit(CHANGE_EVENT, message);
+  },
   translate: I18n.translate,
 });
 

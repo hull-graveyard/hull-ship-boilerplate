@@ -2,27 +2,30 @@
  * This is where the Ship code actually begins.
  **/
 
-import React         from "react";
+import React from "react";
 import DynamicStyles from "./dynamic-styles";
-import Styles        from "../styles/main.scss";
+import Styles from "../styles/main.scss";
 
 var Ship = React.createClass({
   getDefaultProps() {
     return {
-      engine : {},
-      settings : {}
+      engine: {},
+      settings: {}
     };
   },
   getInitialState() {
     return {
-      styles:{
-        locals:{}
-      } 
+      styles: {
+        locals: {}
+      }
     };
   },
   componentWillMount() {
     let styles = Styles.use();
-    this.setState({styles, classes:styles.locals});
+    this.setState({
+      styles,
+      classes: styles.locals
+    });
   },
   componentWillUnmount() {
     Styles.unuse();
@@ -30,7 +33,7 @@ var Ship = React.createClass({
   render() {
     // this.state.locals.ship -> the local, encoded className for the .ship class in main.css.
     // checkout https://github.com/css-modules/css-modules
-    let { classes } = this.state
+    let {classes} = this.state
     return (
       <div className={classes.ship}>
         <DynamicStyles rootClass={classes.ship} {...this.props.settings} document={this.props.engine.document}/>
@@ -42,7 +45,7 @@ var Ship = React.createClass({
           </small>
         </p>
       </div>
-    );
+      );
   }
 });
 

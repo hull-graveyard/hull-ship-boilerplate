@@ -52,6 +52,8 @@
     "gh-pages": "^0.4.0",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.0.0",
+    "gulp-esformatter": "^4.0.0",
+    "gulp-filelog": "^0.4.1",
     "gulp-imagemin": "^2.3.0",
     "gulp-invalidate-cloudfront": "^0.1.2",
     "gulp-load-plugins": "^1.0.0-rc",

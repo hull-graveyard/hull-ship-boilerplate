@@ -1,5 +1,5 @@
-import React      from "react";
-import color      from "color";
+import React from "react";
+import color from "color";
 
 /**
  * Style component
@@ -12,7 +12,7 @@ var HullStyle = React.createClass({
       document: {}
     };
   },
-  getStyle(){
+  getStyle() {
 
     let {text_color, background_image, right_color, left_color} = this.props;
     // Just Javascript™
@@ -39,7 +39,9 @@ var HullStyle = React.createClass({
   render() {
     // return <div></div>
     // Insert any css you want here. Live updates FTW
-    return <style type="text/css" dangerouslySetInnerHTML={{__html:this.getStyle()}}></style>;
+    return <style type="text/css" dangerouslySetInnerHTML={{
+        __html: this.getStyle()
+      }}></style>;
   }
 
 });
