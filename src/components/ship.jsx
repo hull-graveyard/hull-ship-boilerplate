@@ -1,15 +1,36 @@
+'use strict';
+/* global Hull, module*/
+
 /**
  * This is where the Ship code actually begins.
  **/
 
+
+// Our boilerplate uses React.
 import React from 'react';
+
+// A good way to define styles that can be customized from the dashboard
 import DynamicStyles from './dynamic-styles';
+
+// A good way to import styles sandboxed to the current Ship
 import Styles from '../styles/main.scss';
+
+// The engine contains all the logic and state for the app
+import Engine from '../lib/engine';
 
 const Ship = React.createClass({
   propTypes: {
     engine: React.PropTypes.object.isRequired,
     settings: React.PropTypes.object.isRequired,
+  },
+  statics: {
+    // This method, when called, starts the ship
+    start: function(element, deployment, hull) {
+      // Create an Engine. We like this pattern even though it's not mandatory.
+      const engine = new Engine(deployment, hull);
+      // Render Ship into the designated root
+      React.render(<Ship engine={engine}/>, element);
+    },
   },
   getDefaultProps() {
     return {
@@ -47,7 +68,7 @@ const Ship = React.createClass({
           </small>
         </p>
       </div>
-      );
+    );
   },
 });
 
