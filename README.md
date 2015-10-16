@@ -16,6 +16,7 @@ You can use the tooling of your choice to build Ships, they're technology-agnost
 
 ### The Boot Process.
 Read more about [The Boot Process](hull_boot_process.md)
+Read the [Ships Documentation](http://www.hull.io/docs/apps/ships) for more deatils about the content of `manifest.json`
 
 ## Manifest URL
     https://ships.hull.io/hull-ship-boilerplate/manifest.json

@@ -24,7 +24,10 @@
   margin:0 0 16px 0;
 }
 
-.download-link{
-  composes:button-primary from '../../styles/mixins.css';
+.button{
+  composes:button from '../../styles/mixins.css';
   text-decoration: none;
+  + .button{
+    margin-left: 10px;
+  }
 }

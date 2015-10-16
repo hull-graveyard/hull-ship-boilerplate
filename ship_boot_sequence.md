@@ -1,6 +1,3 @@
-# How Ships work
-Here is a detailed breakdown of how Ships are injected in a page.
-
 ## Ship Boot Sequence
 When you embed the `hull.js` library in the page, `Hull.ready` will get called automatically when the library is... well... ready. When this happens, it gets passed an array of Deployments, looking like this:
 
