@@ -12,7 +12,7 @@ function handleError(err) {
 // Raise errors on Webpack build errors
 function webpackFeedbackHandler(err, stats){
   handleError(err);
-  if (stats) {
+  if(stats){
     var st = stats.toJson();
 
     if(st.errors.length > 0){
@@ -38,7 +38,10 @@ module.exports = function(gulp, config){
   gulp.task('webpack', function(callback) {
     // Then, use Webpack to bundle all JS and html files to the destination folder
     webpack(webpackConfig.production, function(err, stats) {
-      webpackFeedbackHandler(err, stats)
+      if(err){
+        webpackFeedbackHandler(err, stats)
+        return callback(err)
+      }
       callback();
     });
   });

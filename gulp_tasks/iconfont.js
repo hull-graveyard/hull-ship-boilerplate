@@ -1,5 +1,4 @@
 var iconfont       = require('gulp-iconfont')
-var iconfontCss    = require('gulp-iconfont-css')
 var rename         = require('gulp-rename');
 var consolidate    = require('gulp-consolidate');
 
@@ -25,15 +24,10 @@ module.exports = function(gulp, config){
           className: 'icon'
         }
 
-        gulp.src('templates/iconfont.css')
+        gulp.src('iconfont_template.css')
           .pipe(consolidate('lodash',opts))
           .pipe(rename({ baseName:fontConfig.fontName }))
           .pipe(gulp.dest(output.css));
-
-        gulp.src('templates/iconfont.html')
-          .pipe(consolidate('lodash', opts))
-          .pipe(rename({ basename: fontConfig.fontName }))
-          .pipe(gulp.dest(output.html));
 
       })
     .pipe(gulp.dest(output.font));

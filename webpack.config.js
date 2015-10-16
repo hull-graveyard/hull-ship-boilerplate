@@ -8,7 +8,7 @@ module.exports = function(config){
   return {
     development:{
       name     : 'browser',
-      devtool  : '#inline-source-map',
+      // devtool  : '#source-map',
       devServer: true,
       module   : {loaders: config.devLoaders},
       resolve  : config.resolve,

@@ -1,3 +1,5 @@
+@import '../../styles/settings';
+
 :global(#ship){
   margin: 30px 0;
 }
