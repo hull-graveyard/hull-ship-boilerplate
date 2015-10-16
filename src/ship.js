@@ -1,8 +1,13 @@
 'use strict';
 
-// The engine contains all the logic and state for the app
+// For better integration in React apps, we recommend using this pattern.
+// We've seen it work pretty well.
+
 import Ship from './components/ship';
+import start from './start';
 
 if ( Hull && Hull.onEmbed ) {
-  Hull.onEmbed(Ship.start);
+  Hull.onEmbed(start);
 }
+
+export default Ship;

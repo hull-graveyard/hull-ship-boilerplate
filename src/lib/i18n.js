@@ -10,9 +10,9 @@ function compileMessages() {
 
   const mf = new MessageFormat(_locale);
 
-  for (const key in _translations[_locale]) {
-    if (_translations[_locale].hasOwnProperty(key)) {
-      _messages[key] = mf.compile(_translations[_locale][key]);
+  for (const k in _translations[_locale]) {
+    if (_translations[_locale].hasOwnProperty(k)) {
+      _messages[k] = mf.compile(_translations[_locale][k]);
     }
   }
 }
@@ -35,19 +35,18 @@ function translate(message, data) {
     return message;
   }
 
-  let msg = _messages[message];
+  let m = _messages[message];
 
-  if (msg === null) {
+  if (!m) {
     console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
-
-    const format = new MessageFormat(_locale);
-    msg = _messages[message] = format.compile(message);
+    const mf = new MessageFormat(_locale);
+    m = _messages[message] = mf.compile(message);
   }
 
   try {
-    return msg(data);
-  } catch (err) {
-    console.error('[i18n] Cannot translate "' + message + '". ' + err.message); // eslint-disable-line
+    return m(data);
+  } catch (e) {
+    console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
 
     return '[error] ' + message;
   }

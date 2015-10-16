@@ -10,66 +10,41 @@ import reactCSSModules from 'react-css-modules';
 import shipStyles from './index.css';
 
 // A custom component to inject a stylesheet that describes how customer can customize styles
-import CustomStyles from '../styles';
+import Styles from '../styles';
 
-// Contains the logic and state for the app
-import Engine from '../../lib/engine';
+@reactCSSModules(shipStyles)
+export default class Ship extends React.Component {
 
-const Ship = React.createClass({
-
-  propTypes: {
+  static propTypes = {
     engine: React.PropTypes.object.isRequired,
     styles: React.PropTypes.object,
-  },
+  }
 
-  statics: {
-    // This method, when called, starts the ship
-    start: function(element, deployment, hull) {
-      // Create an Engine. We like this pattern even though it's not mandatory.
-      const engine = new Engine(deployment, hull);
-      // Render Ship into the designated root
-      React.render(<Ship engine={engine}/>, element);
-    },
-  },
+  state = this.props.engine.getState();
 
-  getDefaultProps() {
-    return {
-      engine: {},
-      styles: {},
-    };
-  },
-  getInitialState() {
-    return this.props.engine.getState();
-  },
-
-  componentWillMount() {
+  componentWillMount = () => {
     this.props.engine.addChangeListener(this._onChange);
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.engine.removeChangeListener(this._onChange);
-  },
+  }
 
-  _onChange() {
+  _onChange = () => {
     this.setState(this.props.engine.getState());
-  },
+  }
 
   render() {
-    const { settings } = this.state;
     const { engine, styles } = this.props;
+    const { settings, user } = this.state;
     return (
       <div styleName="ship">
-        <CustomStyles scope={styles.ship} styles={styles} settings={settings} />
+        <Styles scope={styles.ship} styles={styles} settings={settings} />
         <h3 styleName="title">{engine.translate('Ship Started')}</h3>
-        <hr/>
-        <p>
-          <small>
-            <a href="https://github.com/hull-ships/hull-ship-boilerplate/archive/master.zip" className="download-link">{engine.translate('Download Boilerplate')}</a>
-          </small>
-        </p>
+        <p>Hello, {user.name || 'There'}</p>
+        <hr styleName="divider"/>
+        <a href="https://github.com/hull-ships/hull-ship-boilerplate/archive/master.zip" styleName="download-link">{engine.translate('Download Boilerplate')}</a>
       </div>
     );
-  },
-});
-
-export default reactCSSModules(Ship, shipStyles);
+  }
+}

@@ -5,21 +5,26 @@
 }
 
 .ship{
-  box-shadow: 0 0 10px rgba(0,0,0,.1);
-  padding: 10px 0;
-
-  h3 {
-    color: #4BC2B8; /* Green */
-  }
-
-  hr{
-    height: 1px;
-    background-color: #4BC2B8;
-    padding: 0 0 0 0;
-    margin:0 0 16px 0;
-  }
+  padding: calc(var(--line-height-normal)*2) 0; 
+  composes:borderRadius boxShadowFilet from '../../styles/mixins.css';
 }
 
 .title{
-  font-weight: 200;
+  composes: primaryText fontWeightLight fontSizeXLarge from '../../styles/mixins.css';
+  opacity: .5;
+  margin: 0;
+}
+
+
+.divider{
+  composes: primaryBackground from '../../styles/mixins.css';
+  opacity: .2;
+  height: 1px;
+  padding: 0 0 0 0;
+  margin:0 0 16px 0;
+}
+
+.download-link{
+  composes:button-primary from '../../styles/mixins.css';
+  text-decoration: none;
 }

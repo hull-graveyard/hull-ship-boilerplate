@@ -83,7 +83,7 @@ The entire tooling configuration is in `/config.js`
 
 - [Gulp](http://gulpjs.com/)
 - [Webpack](http://webpack.github.io/)
-- [Babel](https://babeljs.io/) so you can write [ES6](https://github.com/lukehoban/es6features) like a boss _today_.
+- [Babel](https://babeljs.io/) so you can write [ES6](https://github.com/lukehoban/es6features) like a boss _today_, and even [ES7 Stage 0](https://babeljs.io/docs/usage/experimental/) with comprehensions, decorators and class properties
 - [Hot module replacement](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) that just works. (Live reload and `require` **everything**, without page reloads)
 - [React Hot Loader](http://gaearon.github.io/react-hot-loader/) pre-configured (Hot module replacement for react. Hot-replace components). [Check this out](https://vimeo.com/100010922) for a quick overview
 - [CSS Modules](https://github.com/css-modules/css-modules) (`import style = "main.css";`)

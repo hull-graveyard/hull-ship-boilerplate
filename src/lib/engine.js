@@ -1,11 +1,6 @@
 'use strict';
 /* global require, module */
 
-// NOT COMPLETE
-// NOT COMPLETE
-// NOT COMPLETE
-
-import assign from 'object-assign';
 import I18n from './i18n';
 const Emitter = require('events').EventEmitter;
 
@@ -18,38 +13,50 @@ const Emitter = require('events').EventEmitter;
 
 const CHANGE_EVENT = 'change';
 
-function Engine(deployment, hull) {
-  const self = this;
+export default class Engine extends Emitter {
 
-  self.hull = hull;
-  I18n.setTranslations(deployment.ship.translations);
+  constructor(deployment, hull) {
+    super();
 
-  const onChange = function() {
-    self.emitChange();
-  };
+    if (!deployment) {
+      throw new Error('Ship could not get deployment object. It is required to boot');
+    }
+    if (!hull) {
+      throw new Error('Ship could not get hull instance. It is required to boot');
+    }
 
-  // Subscribe to every Hull user event
-  hull.on('hull.user.*', onChange);
-  this.emitChange();
-}
+    this.hull = hull;
+    this.ship = deployment.ship;
+    I18n.setTranslations(deployment.ship.translations);
 
-assign(Engine.prototype, Emitter.prototype, {
-  getState: function() {
+    const onChange = function() {
+      self.emitChange();
+    };
+
+    // Subscribe to every Hull user event
+    hull.on('hull.user.*', onChange);
+    this.emitChange();
+  }
+
+  getState = () => {
     return {
-      settings: this._ship.settings,
+      settings: this.ship.settings,
       user: this.hull.currentUser(),
     };
-  },
-  addChangeListener: function(listener) {
-    this.addListener(CHANGE_EVENT, listener);
-  },
-  removeChangeListener: function(listener) {
-    this.removeListener(CHANGE_EVENT, listener);
-  },
-  emitChange: function(message) {
-    this.emit(CHANGE_EVENT, message);
-  },
-  translate: I18n.translate,
-});
+  }
 
-module.exports = Engine;
+  addChangeListener = (listener) => {
+    this.addListener(CHANGE_EVENT, listener);
+  }
+
+  removeChangeListener = (listener) => {
+    this.removeListener(CHANGE_EVENT, listener);
+  }
+
+  emitChange = (message) => {
+    this.emit(CHANGE_EVENT, message);
+  }
+
+  translate = I18n.translate
+
+}

@@ -5,6 +5,14 @@
   "index": "ship.js",
   "version": "0.0.2",
   "locales": ["en"],
-  "settings": [],
+  "settings": [
+    {
+      "name":"primary_color",
+      "title": "Primary color",
+      "type": "string",
+      "format": "color",
+      "default": "#0093E6"
+    }
+  ],
   "resources": []
 }

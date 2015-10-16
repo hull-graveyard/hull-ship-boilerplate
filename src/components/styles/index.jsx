@@ -29,108 +29,46 @@ const Styles = React.createClass({
   getStyles() {
     const {
       primary_color: primary,
-      link_color: link,
-      background_color: background,
-      text_color: text,
-      button_border_radius: buttonBorderRadius,
-      overlay_border_radius: overlayBorderRadius,
     } = this.props.settings;
 
-    const buttonTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
-    const controlTextColor = color(text).dark() ? text : '#444';
-    const controlBackgroundColor = color(background).lighten(0.1).hexString();
+    const primaryTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
+    const primaryFilet = color(primary).alpha(0.8).hslString();
     return {
       primaryText: {
         normal: {
           color: primary,
         },
       },
-      darkerText: {
+      boxShadowFilet: {
         normal: {
-          color: color(text).darken(0.3).hexString(),
+          boxShadow: `0 0 0 2px ${primaryFilet}`,
         },
       },
-      borderColor: {
-        normal: {
-          borderColor: color(text).alpha(0.5).hslString(),
-        },
-      },
-      linkText: {
+      primaryBackground: {
         'normal': {
-          color: link,
-        },
-        ':link': {
-          color: link,
-        },
-        ':active': {
-          color: link,
-        },
-        ':visited': {
-          color: link,
-        },
-        ':hover': {
-          color: color(link).darken(0.2).hexString(),
-        },
-        ':focus': {
-          color: color(link).darken(0.2).hexString(),
-        },
-      },
-      borderRadius: {
-        normal: {
-          borderRadius: overlayBorderRadius,
-        },
-      },
-      smallBorderRadius: {
-        normal: {
-          borderRadius: (buttonBorderRadius),
-        },
-      },
-      mainBackground: {
-        normal: {
-          color: this.props.settings.text_color,
-          backgroundColor: background,
-        },
-      },
-      control: {
-        'normal': {
-          color: controlTextColor,
-          backgroundColor: controlBackgroundColor,
-        },
-        ':focus': {
-          boxShadow: `inset 0 -2px 0 0 ${primary}`,
-
-        },
-      },
-      button: {
-        'normal': {
-          color: buttonTextColor,
-          borderRadius: buttonBorderRadius,
           backgroundColor: primary,
+          color: primaryTextColor,
         },
         ':link': {
-          color: buttonTextColor,
+          color: primaryTextColor,
           backgroundColor: primary,
         },
         ':visited': {
-          color: buttonTextColor,
+          color: primaryTextColor,
           backgroundColor: primary,
         },
         ':active': {
-          color: buttonTextColor,
+          color: primaryTextColor,
           backgroundColor: color(primary).darken(0.2).hexString(),
         },
         ':hover': {
-          color: buttonTextColor,
+          color: primaryTextColor,
           backgroundColor: color(primary).darken(0.2).hexString(),
         },
         ':focus': {
-          color: buttonTextColor,
+          color: primaryTextColor,
           backgroundColor: color(primary).darken(0.2).hexString(),
         },
-      },
-
-      placeholder: {
-        color: color(text).alpha(0.2).hexString(),
       },
     };
   },
