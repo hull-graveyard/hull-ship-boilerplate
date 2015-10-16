@@ -14,28 +14,36 @@ A Deployment is a Hash with the following structure. It has is everytyhing neede
 
 ```js
 {
-  settings: {
+  "settings": {
     // Those are Deployment-specific settings.
     // The Ship also has Ship-level settings.
     // 
     // The settings below are always present. You can declare more
     // in the "deployment_settings" hash of the Manifest.
-    '$el': 'body>div.main>div.secondary', //css3 selector where to insert ship
-    '$placement':'bottom', //bottom|top|before|after|replace, where to embed when selector is found
-    '$multi': true, //wether to embed on every matched selector or just the first
+    "_multi": false, //wether to embed on every matched selector or just the first
+    "_placement": "replace", //bottom|top|before|after|replace, where to embed when selector is found
+    "_selector": "#my-ship" //css3 selector where to insert ship
     // ...
   },
-  ship: {
-    name: "ShipName",
-    manifest:{
+  "ship": {
+    "id": "554b7b05f89a87a527000180",
+    "name": "My Simple Ship",
+    "manifest": {
       index: '/ship.js'
       //... Entire manifest.json
-    }, 
-    resources:{}, //configured Resources, such as Quizzes
-    settings: {} //Configured Settings that are described in manifest
+    },
+    "settings": { ... }, //Configured Settings that are described in manifest
+    "resources": { ... }, //configured Resources, such as Quizzes
+    "translations" : { ... },
+    "manifest_url": "https://example.com/my-ship/manifest.json",
+    "index": "https://example.com/my-ship/ship.js",
+    ...
   },
-  platform: {
+  "platform": {
     //... Platform Data
+  },
+  "organization": {
+    //... Organization Data
   }
 }
 ```
